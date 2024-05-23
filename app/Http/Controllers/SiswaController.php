@@ -14,7 +14,7 @@ class SiswaController extends Controller
     {
         return view('siswa.create');
     }
-    // ======= Tambahkan kode ini =======
+
     public function store(Request $request)
     {
         // Membuat instance baru dari model Siswa dan menyimpan data

@@ -59,6 +59,8 @@
                 <h1 class="text-center">Daftar Siswa</h1>
             </div>
             <div class="card-body">
+                <button type="button" class="btn btn-danger mb-3" id="deleteSelected"><i class="fas fa-trash-alt"></i>
+                    Hapus yang Dipilih</button>
                 @if (count($semuaSiswa) > 0)
                     <table id="siswaTable" class="table table-striped table-bordered">
                         <thead>
@@ -85,10 +87,14 @@
                                             <a href="{{ url('/siswa/' . $s->id . '/edit') }}"
                                                 class="btn btn-success btn-rounded ms-1"><i class="fas fa-edit"></i>
                                                 Edit</a>
-                                            <button type="button" class="btn btn-danger btn-rounded ms-1 delete-button"
+                                            <button type="button" class="btn btn-danger btn-rounded mx-2 delete-button"
                                                 data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
                                                 data-id="{{ $s->id }}"><i class="fas fa-trash-alt"></i>
                                                 Delete</button>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="{{ $s->id }}" name="selectedSiswa[]">
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -117,30 +123,63 @@
                     <form id="deleteForm" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                        <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Ya, Hapus</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#siswaTable').DataTable({
-                    "columnDefs": [{
-                        "targets": 'no-sort', // Gunakan kelas no-sort untuk kolom yang tidak ingin disortir
-                        "orderable": false
-                    }]
-                });
-
-                $('.delete-button').click(function() {
-                    var studentId = $(this).data('id');
-                    $('#deleteForm').attr('action', '{{ url('/siswa') }}/' + studentId);
-                });
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#siswaTable').DataTable({
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                }]
             });
-        </script>
+
+            $('.delete-button').click(function() {
+                var studentId = $(this).data('id');
+                $('#deleteForm').attr('action', '{{ url('/siswa') }}/' + studentId);
+            });
+
+            $('#deleteSelected').click(function() {
+                var selectedSiswa = [];
+                $('input[name="selectedSiswa[]"]:checked').each(function() {
+                    selectedSiswa.push($(this).val());
+                });
+
+                if (selectedSiswa.length > 0) {
+                    $('#confirmDeleteModal').modal('show');
+                    $('#confirmDeleteModal').on('click', '#confirmDeleteButton', function() {
+                        $.ajax({
+                            url: '{{ route('siswa.deleteSelected') }}',
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                _method: 'DELETE',
+                                siswa_ids: selectedSiswa
+                            },
+                            success: function(response) {
+                                location.reload();
+                            },
+                            error: function(xhr) {
+                                console.log(xhr.responseText);
+                                alert('Gagal menghapus siswa.');
+                            }
+                        });
+                    });
+                } else {
+                    alert('Pilih setidaknya satu siswa untuk dihapus.');
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>
