@@ -1,14 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\DokterController;
 
-Route::get('/', [SiswaController::class, 'index']);
-Route::get('/siswa/create', [SiswaController::class, 'create']);
-Route::post('/siswa', [SiswaController::class, 'store']);
-Route::get('/siswa', [SiswaController::class, 'index']);
-Route::get('/siswa/{id_siswa}', [SiswaController::class, 'show']);
-Route::get('/siswa/{id_siswa}/edit', [SiswaController::class, 'edit']);
-Route::put('/siswa/{id_siswa}', [SiswaController::class, 'update']);
-Route::delete('/siswa/{id_siswa}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
-Route::post('/siswa/deleteSelected', [SiswaController::class, 'deleteSelected'])->name('siswa.deleteSelected');
+Route::get('/', [DokterController::class, 'index']);
+Route::get('/dokter/create', [DokterController::class, 'create']);
+Route::post('/dokter', [DokterController::class, 'store']);
+Route::get('/dokter', [DokterController::class, 'index']);
+Route::get('/dokter/{id_dokter}', [DokterController::class, 'show']);
+Route::get('/dokter/{id_dokter}/edit', [DokterController::class, 'edit']);
+Route::put('/dokter/{id_dokter}', [DokterController::class, 'update']);
+Route::delete('/dokter/{id_dokter}', [DokterController::class, 'destroy'])->name('dokter.destroy');
+Route::post('/dokter/deleteSelected', [DokterController::class, 'deleteSelected'])->name('dokter.deleteSelected');

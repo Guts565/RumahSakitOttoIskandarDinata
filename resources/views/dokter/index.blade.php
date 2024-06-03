@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Siswa</title>
+    <title>Daftar dokter</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -56,35 +56,38 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h1 class="text-center">Daftar Siswa</h1>
+                <h1 class="text-center">Daftar Dokter</h1>
             </div>
             <div class="card-body">
                 <button type="button" class="btn btn-danger mb-3" id="deleteSelected"><i class="fas fa-trash-alt"></i>
                     Hapus yang Dipilih</button>
-                @if (count($semuaSiswa) > 0)
-                    <table id="siswaTable" class="table table-striped table-bordered">
+                <a href="{{ url('/dokter/create/') }}" class="btn btn-primary mb-3 ms-2">Tambahkan Data</a>
+                @if (count($semuaDokter) > 0)
+                    <table id="dokterTable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Alamat</th>
                                 <th>No Telepon</th>
+                                <th>Profesi</th>
                                 <th class="no-sort">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($semuaSiswa as $s)
+                            @foreach ($semuaDokter as $s)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $s->nama }}</td>
                                     <td>{{ $s->alamat }}</td>
                                     <td>{{ $s->no_telp }}</td>
+                                    <td>{{ $s->profesi }}</td>
                                     <td>
                                         <div class="btn-container">
-                                            <a href="{{ url('/siswa/' . $s->id) }}"
+                                            <a href="{{ url('/dokter/' . $s->id) }}"
                                                 class="btn btn-primary btn-rounded ms-1"><i
                                                     class="fas fa-info-circle"></i> Detail</a>
-                                            <a href="{{ url('/siswa/' . $s->id . '/edit') }}"
+                                            <a href="{{ url('/dokter/' . $s->id . '/edit') }}"
                                                 class="btn btn-success btn-rounded ms-1"><i class="fas fa-edit"></i>
                                                 Edit</a>
                                             <button type="button" class="btn btn-danger btn-rounded mx-2 delete-button"
@@ -93,7 +96,7 @@
                                                 Delete</button>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox"
-                                                    value="{{ $s->id }}" name="selectedSiswa[]">
+                                                    value="{{ $s->id }}" name="selecteddokter[]">
                                             </div>
                                         </div>
                                     </td>
@@ -117,7 +120,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus siswa ini?
+                    Apakah Anda yakin ingin menghapus dokter ini?
                 </div>
                 <div class="modal-footer">
                     <form id="deleteForm" method="POST">
@@ -135,7 +138,7 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function() {
-            $('#siswaTable').DataTable({
+            $('#dokterTable').DataTable({
                 "columnDefs": [{
                     "targets": 'no-sort',
                     "orderable": false
@@ -143,38 +146,38 @@
             });
 
             $('.delete-button').click(function() {
-                var studentId = $(this).data('id');
-                $('#deleteForm').attr('action', '{{ url('/siswa') }}/' + studentId);
+                var dokterId = $(this).data('id');
+                $('#deleteForm').attr('action', '{{ url('/dokter') }}/' + dokterId);
             });
 
             $('#deleteSelected').click(function() {
-                var selectedSiswa = [];
-                $('input[name="selectedSiswa[]"]:checked').each(function() {
-                    selectedSiswa.push($(this).val());
+                var selecteddokter = [];
+                $('input[name="selecteddokter[]"]:checked').each(function() {
+                    selecteddokter.push($(this).val());
                 });
 
-                if (selectedSiswa.length > 0) {
+                if (selecteddokter.length > 0) {
                     $('#confirmDeleteModal').modal('show');
                     $('#confirmDeleteModal').on('click', '#confirmDeleteButton', function() {
                         $.ajax({
-                            url: '{{ route('siswa.deleteSelected') }}',
+                            url: '{{ route('dokter.deleteSelected') }}',
                             type: 'POST',
                             data: {
                                 _token: '{{ csrf_token() }}',
-                                _method: 'DELETE',
-                                siswa_ids: selectedSiswa
+                                _method: 'POST',
+                                dokter_ids: selecteddokter
                             },
                             success: function(response) {
                                 location.reload();
                             },
                             error: function(xhr) {
                                 console.log(xhr.responseText);
-                                alert('Gagal menghapus siswa.');
+                                alert('Gagal menghapus dokter.');
                             }
                         });
                     });
                 } else {
-                    alert('Pilih setidaknya satu siswa untuk dihapus.');
+                    alert('Pilih setidaknya satu dokter untuk dihapus.');
                 }
             });
         });

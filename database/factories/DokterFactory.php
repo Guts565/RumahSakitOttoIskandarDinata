@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Siswa>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Dokter>
  */
-class SiswaFactory extends Factory
+class DokterFactory extends Factory
 {
     protected static ?string $password;
 
@@ -25,6 +25,7 @@ class SiswaFactory extends Factory
             'nama' => fake()->name(),
             'alamat' => fake()->address(),
             'no_telp' => fake()->phoneNumber(),
+            'profesi' => fake()->jobTitle(),
             'remember_token' => Str::random(10),
         ];
     }
