@@ -65,6 +65,12 @@ class DokterController extends Controller
         // Mengupdate data dokter
         $dokter->nama = $request->input('nama');
         $dokter->poliklinik = $request->input('poliklinik');
+        $dokter->senin = $request->input('senin');
+        $dokter->selasa = $request->input('selasa');
+        $dokter->rabu = $request->input('rabu');
+        $dokter->kamis = $request->input('kamis');
+        $dokter->jumat = $request->input('jumat');
+        $dokter->sabtu = $request->input('sabtu');
         $dokter->save();
         // Redirect ke halaman daftar dokter dengan pesan sukses
         return redirect('/dokter')->with('success', 'Dokter berhasil diperbarui.');
