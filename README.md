@@ -1,3 +1,7 @@
+## ver 1.4
+- added schedule and changing tittle to "poliklinik"
+- might have wanted to remove multiple deletion on next version because laravel bug
+
 ## ver 1.3
 - improved UI
 - more focusing on UI and UX
