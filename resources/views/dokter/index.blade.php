@@ -59,29 +59,36 @@
                 <h1 class="text-center">Daftar Dokter</h1>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-danger mb-3" id="deleteSelected"><i class="fas fa-trash-alt"></i>
+                <button type="button" class="btn btn-danger mb-3 rounded-4" id="deleteSelected"><i
+                        class="fas fa-trash-alt"></i>
                     Hapus yang Dipilih</button>
-                <a href="{{ url('/dokter/create/') }}" class="btn btn-primary mb-3 ms-2">Tambahkan Data</a>
+                <a href="{{ url('/admin/create/') }}" class="btn btn-primary mb-3 ms-2 rounded-4">Tambahkan Data</a>
                 @if (count($semuaDokter) > 0)
                     <table id="dokterTable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Alamat</th>
-                                <th>No Telepon</th>
-                                <th>Profesi</th>
+                                <th>POLIKLINIK</th>
+                                <th>Dokter</th>
+                                <th>Senin</th>
+                                <th>Selasa</th>
+                                <th>Rabu</th>
+                                <th>Kamis</th>
+                                <th>Jum'at</th>
+                                <th>Sabtu</th>
                                 <th class="no-sort">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($semuaDokter as $s)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $s->poliklinik }}</td>
                                     <td>{{ $s->nama }}</td>
-                                    <td>{{ $s->alamat }}</td>
-                                    <td>{{ $s->no_telp }}</td>
-                                    <td>{{ $s->profesi }}</td>
+                                    <td>{{ $s->senin }}</td>
+                                    <td>{{ $s->selasa }}</td>
+                                    <td>{{ $s->rabu }}</td>
+                                    <td>{{ $s->kamis }}</td>
+                                    <td>{{ $s->jumat }}</td>
+                                    <td>{{ $s->sabtu }}</td>
                                     <td>
                                         <div class="btn-container">
                                             <a href="{{ url('/dokter/' . $s->id) }}"
@@ -136,6 +143,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    {{-- js for multiple deletion --}}
     <script>
         $(document).ready(function() {
             $('#dokterTable').DataTable({
@@ -164,7 +172,6 @@
                             type: 'POST',
                             data: {
                                 _token: '{{ csrf_token() }}',
-                                _method: 'POST',
                                 dokter_ids: selecteddokter
                             },
                             success: function(response) {

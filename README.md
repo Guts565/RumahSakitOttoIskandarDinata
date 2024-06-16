@@ -1,3 +1,7 @@
+## ver 1.3
+- improved UI
+- more focusing on UI and UX
+
 ## ver 1.2
 - Changed models and table to doctor
 - added button in dashboard to add data

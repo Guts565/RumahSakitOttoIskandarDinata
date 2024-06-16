@@ -22,11 +22,14 @@ class DokterFactory extends Factory
     public function definition(): array
     {
         return [
+            'poliklinik' => fake()->jobTitle(),
             'nama' => fake()->name(),
-            'alamat' => fake()->address(),
-            'no_telp' => fake()->phoneNumber(),
-            'profesi' => fake()->jobTitle(),
-            'remember_token' => Str::random(10),
+            'senin' => fake()->time(),
+            'selasa' => fake()->time(),
+            'rabu' => fake()->time(),
+            'kamis' => fake()->time(),
+            'jumat' => fake()->time(),
+            'sabtu' => fake()->time(),
         ];
     }
 }

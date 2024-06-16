@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DokterController;
 
+// Dokter Routes
 Route::get('/', [DokterController::class, 'index']);
-Route::get('/dokter/create', [DokterController::class, 'create']);
+Route::get('/admin/create', [DokterController::class, 'create']);
 Route::post('/dokter', [DokterController::class, 'store']);
 Route::get('/dokter', [DokterController::class, 'index']);
 Route::get('/dokter/{id_dokter}', [DokterController::class, 'show']);

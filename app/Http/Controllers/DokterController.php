@@ -12,7 +12,7 @@ class DokterController extends Controller
 {
     public function create()
     {
-        return view('dokter.create');
+        return view('admin.create');
     }
 
     public function store(Request $request)
@@ -20,9 +20,7 @@ class DokterController extends Controller
         // Membuat instance baru dari model Dokter dan menyimpan data
         $dokter = new Dokter;
         $dokter->nama = $request->input('nama');
-        $dokter->alamat = $request->input('alamat');
-        $dokter->no_telp = $request->input('no_telp');
-        $dokter->profesi = $request->input('profesi');
+        $dokter->poliklinik = $request->input('poliklinik');
         $dokter->save();
         // Arahkan user ke halaman dokter dengan pesan sukses
         return redirect('/dokter')->with('flash_message', 'Dokter berhasil ditambahkan!');
@@ -55,7 +53,7 @@ class DokterController extends Controller
         // Menggunakan instance untuk mencari dokter berdasarkan ID
         $dokter = $dokterModel->find($id_dokter);
         // Mengirim data dokter ke view edit
-        return view('dokter.edit', compact('dokter'));
+        return view('admin.edit', compact('dokter'));
     }
 
     public function update(Request $request, $id_dokter)
@@ -66,9 +64,7 @@ class DokterController extends Controller
         $dokter = $dokterModel->find($id_dokter);
         // Mengupdate data dokter
         $dokter->nama = $request->input('nama');
-        $dokter->alamat = $request->input('alamat');
-        $dokter->no_telp = $request->input('no_telp');
-        $dokter->profesi = $request->input('profesi');
+        $dokter->poliklinik = $request->input('poliklinik');
         $dokter->save();
         // Redirect ke halaman daftar dokter dengan pesan sukses
         return redirect('/dokter')->with('success', 'Dokter berhasil diperbarui.');
@@ -95,4 +91,12 @@ class DokterController extends Controller
 
         return response()->json(['success' => true]);
     }
+    // public function deleteSelected(Request $request)
+    // {
+    //     $ids = $request->input('dokter_ids');
+    //     if (!empty($ids)) {
+    //         Dokter::whereIn('id', $ids)->delete();
+    //     }
+    //     return response()->json(['success' => "Dokters deleted successfully."]);
+    // }
 }
