@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jadwal Dokter</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -23,28 +23,63 @@
         };
     </script>
     <style>
-        @keyframes gradient {
+        /* @keyframes gradient {
             0% {
                 background-position: 0% 50%;
             }
 
             50% {
-                background-position: 100% 50%;
+                background-position: 50% 50%;
             }
 
             100% {
                 background-position: 0% 50%;
             }
+        } */
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
         }
 
         body {
-            background: linear-gradient(270deg, #763394, #5e5717, #5e1515, #1d085a, #0a4a1f, #6a329f, #c90076);
+            /* background: linear-gradient(270deg, #763394, #bca900, #5e1515, #1d085a, #0a4a1f, #6a329f, #c90076); */
+            background: linear-gradient(270deg, #3700cf, #10003e);
+            /* background: #000000; */
             background-size: 600% 600%;
-            animation: gradient 100s ease infinite;
+            /* animation: gradient 80s ease infinite; */
+        }
+
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            color: #ffffff;
+            margin-top: 0.75rem;
+            padding-top: 0.5rem
+        }
+
+        .dataTables_wrapper .dataTables_filter input,
+        .dataTables_wrapper .dataTables_length select {
+            border-radius: 0.25rem;
+            border: 1px solid #868686;
+            padding: 0.25rem 0.5rem;
+            background-color: #ffffff; /* Warna abu-abu */
+            color: #000000; /* Warna font hitam */
+            margin-bottom: 0.5rem;
+            /* padding-bottom: 0.5rem */
+            margin-inline-start: 0.25rem;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            color: #ffffff;
+            padding-bottom: 1rem;
+            padding-top: 0.5rem;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button {
-            padding: 0.25rem 0.5rem;
+            padding: 0.5rem 0.5rem;
             margin: 0 0.25rem;
             border-radius: 0.25rem;
             color: #fff;
@@ -52,34 +87,15 @@
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background-color: #2d3748;
+            background-color: #178e2b;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background-color: #2c5282;
+            background-color: #3081e5;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
-            background-color: #a0aec0;
-        }
-
-        .dataTables_wrapper .dataTables_info {
-            color: #ffffff;
-        }
-
-        .dataTables_wrapper .dataTables_length,
-        .dataTables_wrapper .dataTables_filter {
-            color: #000000;
-            margin-top: 0.75rem;
-        }
-
-        .dataTables_wrapper .dataTables_filter input {
-            border-radius: 0.25rem;
-            border: 1px solid #868686;
-            padding: 0.25rem 0.5rem;
-            background-color: #edf2f7;
-            margin-bottom: 0.75rem;
-            margin-inline-start: 0.25rem
+            background-color: #404040;
         }
 
         .hidden-scrollbar::-webkit-scrollbar {
@@ -93,9 +109,7 @@
 
         .scroll-container {
             height: calc(100vh - 250px);
-            /* Adjust based on your header and footer height */
             overflow-y: auto;
-            /* overflow-x: hidden; */
         }
     </style>
 
@@ -103,54 +117,54 @@
 
 <body>
     <div class="container mx-auto mt-10 px-4">
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="bg-blue-900 text-white py-4">
+        <div class="bg-gray rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-blue-0 text-white py-4">
                 <h1 class="text-center text-2xl font-bold">Jadwal Dokter</h1>
             </div>
             <div class="p-6">
-                <a href="{{ url('/admin/create') }}" class=" bg-blue-500 text-white px-4 py-2 rounded-full pl-3"><i
-                        class="fa-solid fa-user-plus"></i> Tambahkan data</a>
+                {{-- <a href="{{ url('/admin/create') }}" class=" bg-blue-0 text-white px-4 py-2 rounded-full pl-3"><i
+                        class="fa-solid fa-user-plus"></i> Tambahkan data</a> --}}
                 @if (count($semuaDokter) > 0)
-                    <table id="dokterTable" class="min-w-full bg-white border border-white-200">
-                        <thead class="bg-gray-100">
+                    <table id="dokterTable" class="min-w-full text-white">
+                        <thead class="bg-gray-0 ">
                             <tr>
-                                <th class="py-2 px-4 border-b text-left">POLIKLINIK</th>
-                                <th class="py-2 px-4 border-b text-left">Dokter</th>
-                                <th class="py-2 px-4 border-b text-left">Senin</th>
-                                <th class="py-2 px-4 border-b text-left">Selasa</th>
-                                <th class="py-2 px-4 border-b text-left">Rabu</th>
-                                <th class="py-2 px-4 border-b text-left">Kamis</th>
-                                <th class="py-2 px-4 border-b text-left">Jum'at</th>
-                                <th class="py-2 px-4 border-b text-left">Sabtu</th>
-                                <th class="py-2 px-4 border-b no-sort ">Aksi</th>
+                                <th class="py-2 px-4  text-left">POLIKLINIK</th>
+                                <th class="py-2 px-4  text-left">Dokter</th>
+                                <th class="py-2 px-4  text-left">Senin</th>
+                                <th class="py-2 px-4  text-left">Selasa</th>
+                                <th class="py-2 px-4  text-left">Rabu</th>
+                                <th class="py-2 px-4  text-left">Kamis</th>
+                                <th class="py-2 px-4  text-left">Jum'at</th>
+                                <th class="py-2 px-4  text-left">Sabtu</th>
+                                {{-- <th class="py-2 px-4  no-sort ">Aksi</th> --}}
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($semuaDokter as $s)
                                 <tr>
-                                    <td class="py-2 px-4 border-b">{{ $s->poliklinik }}</td>
-                                    <td class="py-2 px-4 border-b">{{ $s->nama }}</td>
-                                    <td class="py-2 px-4 border-b">{{ $s->senin }}</td>
-                                    <td class="py-2 px-4 border-b">{{ $s->selasa }}</td>
-                                    <td class="py-2 px-4 border-b">{{ $s->rabu }}</td>
-                                    <td class="py-2 px-4 border-b">{{ $s->kamis }}</td>
-                                    <td class="py-2 px-4 border-b">{{ $s->jumat }}</td>
-                                    <td class="py-2 px-4 border-b">{{ $s->sabtu }}</td>
-                                    <td class="py-2 px-4 border-b ">
+                                    <td class="py-2 px-4 ">{{ $s->poliklinik }}</td>
+                                    <td class="py-2 px-4 ">{{ $s->nama }}</td>
+                                    <td class="py-2 px-4 ">{{ $s->senin }}</td>
+                                    <td class="py-2 px-4 ">{{ $s->selasa }}</td>
+                                    <td class="py-2 px-4 ">{{ $s->rabu }}</td>
+                                    <td class="py-2 px-4 ">{{ $s->kamis }}</td>
+                                    <td class="py-2 px-4 ">{{ $s->jumat }}</td>
+                                    <td class="py-2 px-4 ">{{ $s->sabtu }}</td>
+                                    {{-- <td class="py-2 px-4  ">
                                         <div class="flex justify-end items-center space-x-2">
                                             <a href="{{ url('/dokter/' . $s->id) }}"
-                                                class="bg-blue-500 text-white px-3 py-1 rounded-full"><i
+                                                class="bg-blue-0 text-white px-3 py-1 rounded-full"><i
                                                     class="fas fa-info-circle"></i> Detail</a>
                                             <a href="{{ url('/dokter/' . $s->id . '/edit') }}"
-                                                class="bg-green-500 text-white px-3 py-1 rounded-full"><i
+                                                class="bg-green-0 text-white px-3 py-1 rounded-full"><i
                                                     class="fas fa-edit"></i> Edit</a>
                                             <button type="button"
-                                                class="bg-red-500 text-white px-3 py-1 rounded-full delete-button"
+                                                class="bg-red-0 text-white px-3 py-1 rounded-full delete-button"
                                                 data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
                                                 data-id="{{ $s->id }}"><i class="fas fa-trash-alt"></i>
                                                 Delete</button>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -242,6 +256,7 @@
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.min.js"></script>
 </body>
 
 </html>

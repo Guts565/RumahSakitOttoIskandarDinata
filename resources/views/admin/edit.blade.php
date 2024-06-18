@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Data Dokter</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css" />
+    {{-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> --}}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css">
     <script src="https://cdn.tailwindcss.com/3.3.0"></script>
     <script>
         tailwind.config = {
@@ -24,6 +24,15 @@
             },
         };
     </script>
+    <style>
+        body {
+            background-color: #e50000
+            /* background: linear-gradient(270deg, #763394, #5e5717, #5e1515, #1d085a, #0a4a1f, #6a329f, #c90076); */
+            /* color: #000000 */
+            /* background-size: 600% 600%; */
+            /* animation: gradient 100s ease infinite; */
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
