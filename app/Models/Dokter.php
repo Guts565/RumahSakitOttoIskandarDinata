@@ -9,7 +9,7 @@ class Dokter extends Model
 {
     protected $table = 'dokter';
     protected $primaryKey = 'id';
-    protected $fillable = ['nama', 'alamat', 'no_telp', 'profesi'];
+    protected $fillable = ['profesi', 'nama',];
     protected $hidden = [
         'password',
         'remember_token',

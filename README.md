@@ -1,3 +1,8 @@
+## ver 1.6
+- added responsive Front-end
+- new look of add and edit page
+- changed frawework for all pages using Tailwind
+
 ## ver 1.5
 - using tailwind for UI but not implemented to all pages yet
 - added morp BG
