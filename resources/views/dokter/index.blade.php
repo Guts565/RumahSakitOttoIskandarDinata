@@ -47,7 +47,7 @@
 
         body {
             /* background: linear-gradient(270deg, #763394, #bca900, #5e1515, #1d085a, #0a4a1f, #6a329f, #c90076); */
-            background: linear-gradient(270deg, #3700cf, #10003e);
+            background: linear-gradient(270deg, #4400ff, #0f172a);
             /* background: #000000; */
             background-size: 600% 600%;
             /* animation: gradient 80s ease infinite; */
@@ -62,11 +62,11 @@
 
         .dataTables_wrapper .dataTables_filter input,
         .dataTables_wrapper .dataTables_length select {
-            border-radius: 0.25rem;
-            border: 1px solid #868686;
+            border-radius: 1rem;
+            border: 0.5px solid #8f8f8f;
             padding: 0.25rem 0.5rem;
-            background-color: #ffffff; /* Warna abu-abu */
-            color: #000000; /* Warna font hitam */
+            background-color: #ffffff00; /* Warna abu-abu */
+            color: #ffffff; /* Warna font hitam */
             margin-bottom: 0.5rem;
             /* padding-bottom: 0.5rem */
             margin-inline-start: 0.25rem;
@@ -83,7 +83,7 @@
             margin: 0 0.25rem;
             border-radius: 0.25rem;
             color: #fff;
-            background-color: #210962;
+            background-color: #21096200;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
@@ -122,10 +122,10 @@
                 <h1 class="text-center text-2xl font-bold">Jadwal Dokter</h1>
             </div>
             <div class="p-6">
-                {{-- <a href="{{ url('/admin/create') }}" class=" bg-blue-0 text-white px-4 py-2 rounded-full pl-3"><i
+                {{-- <a href="{{ url('/admin/create') }}" class="transition delay-150 duration-300 ease-in-out bg-blue-0 text-white px-4 py-2 rounded-full pl-3"><i
                         class="fa-solid fa-user-plus"></i> Tambahkan data</a> --}}
                 @if (count($semuaDokter) > 0)
-                    <table id="dokterTable" class="min-w-full text-white">
+                    <table id="dokterTable" class="min-w-full table-fixed text-white">
                         <thead class="bg-gray-0 ">
                             <tr>
                                 <th class="py-2 px-4  text-left">POLIKLINIK</th>
