@@ -1,0 +1,119 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: linear-gradient(270deg, #4400ff, #0f172a);
+    background-size: 600% 600%;
+    overflow-y: auto;
+    /* Allow scrolling on body */
+}
+
+
+/* Style for the select box */
+.dataTables_wrapper .dataTables_length select {
+    position: relative;
+    appearance: none;
+    /* Remove default arrow */
+    padding-right: 2rem;
+    /* Space for custom arrow */
+    background: transparent;
+    color: #ffffff;
+}
+
+/* Style for the custom arrow */
+.dataTables_wrapper .dataTables_length::after {
+    /* content: '▾'; Unicode for down arrow */
+    font-size: 1rem;
+    color: #ffffff;
+    position: absolute;
+    right: 0.5rem;
+    /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+    color: #ffffff;
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    padding-bottom: 1rem;
+}
+
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    border-radius: 1rem;
+    border: 0.5px solid #8f8f8f;
+    padding: 0.25rem 0.5rem;
+    background-color: #ffffff00;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    margin-inline-start: 0.5rem;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    color: #ffffff;
+    background-color: #020202;
+}
+
+.dataTables_wrapper .dataTables_info {
+    color: #ffffff;
+    padding-bottom: 1rem;
+    padding-top: 0.5rem;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.5rem 0.5rem;
+    margin: 0 0.25rem;
+    border-radius: 0.25rem;
+    color: #fff;
+    background-color: #21096200;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #178e2b;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #3081e5;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    background-color: #404040;
+}
+
+.scroll-container {
+    height: calc(100vh - 100px);
+    overflow: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+}
+
+.scroll-container::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    /* Safari and Chrome */
+}
+
+.overflow-x-auto {
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.min-h-full {
+    min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

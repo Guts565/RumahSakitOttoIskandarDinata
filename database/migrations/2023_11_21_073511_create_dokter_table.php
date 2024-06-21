@@ -15,12 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('poliklinik');
             $table->string('nama');
-            $table->string('senin');
-            $table->string('selasa');
-            $table->string('rabu');
-            $table->string('kamis');
-            $table->string('jumat');
-            $table->string('sabtu');
+            $table->string('jadwal');
             $table->timestamps();
         });
     }

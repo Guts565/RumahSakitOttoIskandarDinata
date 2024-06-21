@@ -24,12 +24,7 @@ class DokterFactory extends Factory
         return [
             'poliklinik' => fake()->jobTitle(),
             'nama' => fake()->name(),
-            'senin' => fake()->time(),
-            'selasa' => fake()->time(),
-            'rabu' => fake()->time(),
-            'kamis' => fake()->time(),
-            'jumat' => fake()->time(),
-            'sabtu' => fake()->time(),
+            'jadwal' => fake()->time(),
         ];
     }
 }

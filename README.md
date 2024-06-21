@@ -1,5 +1,5 @@
-## version for demo
-- just trying to do some UIs
+## 1.7
+- added carousel and adjusting table
 
 ## ver 1.6
 - added responsive Front-end
