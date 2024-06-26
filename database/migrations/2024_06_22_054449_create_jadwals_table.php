@@ -11,22 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dokter', function (Blueprint $table) {
+        Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idPoli');
-            $table->string('image')->nullable();
-            $table->string('nama');
-            $table->string('alamat');
-            $table->string('telp');
+            $table->unsignedBigInteger('idDokter');
+            $table->string('hari');
+            $table->string('waktu');
             $table->timestamps();
-            $table->foreign('idPoli')->references('id')->on('polis')->onDelete('cascade');
+            $table->foreign('idDokter')->references('id')->on('dokter')->onDelete('cascade');
+            $table->unique(['id', 'idDokter']);
         });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('dokter');
+        Schema::dropIfExists('jadwals');
     }
 };

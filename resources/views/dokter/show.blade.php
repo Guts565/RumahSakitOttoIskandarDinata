@@ -12,15 +12,18 @@
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 class="text-2xl font-bold mb-6 text-center">Detail Dokter</h1>
         @if ($dokter)
-            <div class="space-y-4">
-                <p><span class="font-semibold">Profesi:</span> {{ $dokter->poliklinik }}</p>
+            <div class="space-y-2">
+                <p><span class="font-semibold">Poliklinik:</span> {{ $dokter->poli->poli }}</p>
                 <p><span class="font-semibold">Dokter:</span> {{ $dokter->nama }}</p>
-                <p><span class="font-semibold">Senin:</span> {{ $dokter->senin }}</p>
-                <p><span class="font-semibold">Selasa:</span> {{ $dokter->selasa }}</p>
-                <p><span class="font-semibold">Rabu:</span> {{ $dokter->rabu }}</p>
-                <p><span class="font-semibold">Kamis:</span> {{ $dokter->kamis }}</p>
-                <p><span class="font-semibold">Jum'at:</span> {{ $dokter->jumat }}</p>
-                <p><span class="font-semibold">Sabtu:</span> {{ $dokter->sabtu }}</p>
+                <p class="pr-20 text-center"><span class="font-semibold">Jadwal:</span></p>
+                <ul>
+                    @foreach ($dokter->jadwals as $jadwal)
+                        <li>
+                            <span class="font-semibold">Hari:</span> {{ $jadwal->hari }} |
+                            <span class="font-semibold">Waktu:</span> {{ $jadwal->waktu }}
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         @else
             <p class="text-center text-red-500">Dokter tidak ditemukan.</p>
