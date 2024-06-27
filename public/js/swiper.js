@@ -64,9 +64,10 @@ function updateDoctorProfile(startIndex) {
         jadwalElement.innerHTML = ""; // Clear previous schedule
 
         doctor.jadwals.forEach((jadwal) => {
-            const jadwalText = `${jadwal.hari} - ${jadwal.waktu}`;
+            const jadwalText = `${jadwal.hari}: ${jadwal.waktu}`;
             const p = document.createElement("p");
             p.innerText = jadwalText;
+            p.classList.add("schedule-item");
             jadwalElement.appendChild(p);
         });
     }

@@ -18,7 +18,10 @@ html {
     min-width: 100vh;
 }
 
-
+.schedule-item {
+    width: 100%;
+    text-align: left;
+}
 
 /* ------------------------------------------------------------------------ swiper ------------------------------------------------------------------------ */
 
@@ -27,13 +30,7 @@ html {
     height: 100vmin; /* Menggunakan 90% dari tinggi viewport */
 }
 
-
 /* ------------------------------------------------------------------------ Datatabels ------------------------------------------------------------------------ */
-
-.dataTables_wrapper .dataTables_length{
-    display: none;
-}
-
 
 /* Style for the select box */
 .dataTables_wrapper .dataTables_length select {
@@ -44,7 +41,6 @@ html {
     /* Space for custom arrow */
     background: transparent;
     color: #ffffff;
-    
 }
 
 /* Style for the custom arrow */
@@ -68,7 +64,7 @@ html {
 }
 
 .dataTables_wrapper .dataTables_filter {
-    padding-bottom: .5rem;
+    padding-bottom: 0.5rem;
     padding-left: 6px;
 }
 
@@ -107,8 +103,6 @@ html {
     color: #fff;
     background-color: #21096200;
 }
-
-
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     background-color: #178e2b;
@@ -149,22 +143,27 @@ html {
 
 /* Webkit Scrollbar */
 ::-webkit-scrollbar {
-    width: 12px; /* Lebar scrollbar */
-    height: auto; /* Tinggi scrollbar (untuk scrollbar horizontal) */
+    /* Lebar scrollbar */
+    width: 10px;
+    /* Tinggi scrollbar (untuk scrollbar horizontal) */
+    height: auto;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.082);
-    border-radius: 40px;
     /* Warna latar belakang scrollbar */
+    background: rgba(0, 0, 0, 0.334);
+    border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgb(41, 41, 41); /* Warna tombol scrollbar */
-    border-radius: 20px; /* Radius lengkungan scrollbar */
-    border: 2px solid transparent; /* Border tombol scrollbar (kosongkan agar terlihat tipis) */
+    /* Warna tombol scrollbar */
+    background-color: rgb(69, 69, 69);
+    /* Radius lengkungan scrollbar */
+    border-radius: 20px;
+    /* Border tombol scrollbar (kosongkan agar terlihat tipis) */
+    border: 1px solid transparent;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #9f9f9f; /* Warna tombol scrollbar saat hover */
+    background-color: #c2c2c2; /* Warna tombol scrollbar saat hover */
 }

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('idPoli');
             $table->string('image')->nullable();
             $table->string('nama');
-            $table->string('alamat');
-            $table->string('telp');
+            $table->string('alamat')->nullable();
+            $table->string('telp')->nullable();
             $table->timestamps();
             $table->foreign('idPoli')->references('id')->on('polis')->onDelete('cascade');
         });

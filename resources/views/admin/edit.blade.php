@@ -16,6 +16,50 @@
         integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
         crossorigin="anonymous" />
     <link rel="stylesheet" href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css" />
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            /* padding: 25px; */
+            border: 2px solid #888;
+            width: 75%;
+            height: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            /* Ensure content stays inside */
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        #cropperImage {
+            max-width: 100%;
+            /* Ensure image does not overflow */
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body class="antialiased flex items-center justify-center min-h-screen">
@@ -31,7 +75,7 @@
                         src="{{ $dokter->image ? asset('storage/images/' . $dokter->image) : 'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg' }}"
                         alt="">
                     <input type="file" name="image" id="image" @error('image') is-invalid @enderror hidden>
-                    <label for="image" class="cursor-pointer absolute bottom-0 right-0 bg-white/90 rounded-full">
+                    <label for="image" class="cursor-pointer absolute top-2 right-2 bg-white/90 rounded-full p-1">
                         <svg data-slot="icon" class="w-6 h-6 text-blue-700" fill="none" stroke-width="1.5"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                             aria-hidden="true">
@@ -50,6 +94,19 @@
                     {{ $message }}
                 </div>
             @enderror
+            <!-- Cropper Modal -->
+            <div id="cropperModal" class="modal">
+                <div class="modal-content">
+                    <img id="cropperImage" style="max-width: 75%;">
+                    <button
+                        class="ms-12 mb-2 mt-3 middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none  "
+                        id="cropButton">Crop</button>
+                    <button
+                        class="ms-12 mb-2 mt-3 middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none  "
+                        id="closeButton">Close</button>
+                </div>
+            </div>
+
             <div class="relative mb-6 mt-4">
                 <p class="font-semibold">Poliklinik</p>
                 <select name="poliklinik" id="poliklinik"
@@ -146,6 +203,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="mt-8 pt-3">
                 <!-- Tombol Tambah Baru -->
                 <button type="button" id="btnTambahJadwal"
@@ -165,6 +223,8 @@
             </div>
         </form>
     </div>
+
+    {{-- Delete Modal --}}
     <div id="popup-modal" tabindex="-1"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-md max-h-full">
@@ -198,6 +258,75 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const imageInput = document.getElementById("image");
+            const imagePreview = document.getElementById("imagePreview");
+            const cropperModal = document.getElementById("cropperModal");
+            const cropperImage = document.getElementById("cropperImage");
+            const cropButton = document.getElementById("cropButton");
+            const closeButton = document.getElementById("closeButton");
+            let cropper;
+            let format;
+
+            imageInput.addEventListener("change", function(event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                format = file.type;
+
+                reader.onload = function(e) {
+                    cropperImage.src = e.target.result;
+                    cropperModal.style.display = "block";
+
+                    cropper = new Cropper(cropperImage, {
+                        aspectRatio: 1,
+                        viewMode: 1,
+                        autoCropArea: 1,
+                    });
+                };
+
+                reader.readAsDataURL(file);
+            });
+
+            cropButton.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent form submission
+
+                const canvas = cropper.getCroppedCanvas({
+                    width: 2000,
+                    height: 2000,
+                    imageSmoothingQuality: 'high', // High quality
+                });
+
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    imagePreview.src = url;
+
+                    const formData = new FormData();
+                    formData.append('image', blob);
+
+                    // Simpan blob ke input file
+                    const file = new File([blob], `profile.${format.split('/')[1]}`, {
+                        type: format
+                    });
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    imageInput.files = dataTransfer.files;
+
+                    cropper.destroy();
+                    cropperModal.style.display = "none";
+                }, format);
+            });
+
+            // Close button event listener
+            closeButton.addEventListener("click", function() {
+                event.preventDefault(); // Prevent form submission
+                cropper.destroy();
+                cropperModal.style.display = "none";
+            });
+        });
+    </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const btnTambahJadwal = document.getElementById("btnTambahJadwal");
@@ -253,6 +382,9 @@
             }
         });
     </script>
+    <!-- Cropper.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
     <script async src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
     <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/script-name.js"></script>

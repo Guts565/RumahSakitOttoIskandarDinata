@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carousel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,13 +15,15 @@ class DokterController extends Controller
 
     public function index()
     {
+
         // Membuat instance dari model Student
         $dokterModel = new Dokter;
         // Menggunakan instance untuk memanggil metode all()
         $semuaDokter = $dokterModel->all();
         $semuaDokter = Dokter::with('jadwals', 'poli')->get();
         // Mengembalikan view dengan data students
-        return view('dokter.index', compact('semuaDokter'));
+        $carousels = Carousel::first();
+        return view('dokter.index', compact('semuaDokter','carousels'));
     }
 
     public function show($id_dokter)

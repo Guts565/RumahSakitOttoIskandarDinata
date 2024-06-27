@@ -78,7 +78,7 @@
                     class="after:content[''] pointer-events-none absolute left-0  -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 text-md">{{ old('poli') }}</label>
             </div>
             <div class="relative mb-8 mt-8" data-twe-input-wrapper-init>
-                <input 
+                <input
                     class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
                     id="nama" placeholder=" " name="nama" value="{{ old('nama') }}" />
                 <label for="nama"
@@ -87,7 +87,7 @@
                 </label>
             </div>
             <div class="relative mb-8 mt-8" data-twe-input-wrapper-init>
-                <input 
+                <input
                     class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
                     id="alamat" placeholder=" " name="alamat" value="{{ old('alamat') }}" />
                 <label for="alamat"
@@ -96,7 +96,7 @@
                 </label>
             </div>
             <div class="relative mb-8 mt-8" data-twe-input-wrapper-init>
-                <input 
+                <input
                     class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
                     id="telp" placeholder=" " name="telp" value="{{ old('telp') }}" />
                 <label for="telp"
@@ -104,7 +104,7 @@
                 </label>
             </div>
             <div class="relative mb-8 mt-8" data-twe-input-wrapper-init>
-                <input 
+                <input
                     class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
                     id="hari" placeholder=" " name="hari" value="{{ old('hari') }}" />
                 <label for="hari"
@@ -112,29 +112,51 @@
                 </label>
             </div>
             <div class="relative mb-8 mt-8" data-twe-input-wrapper-init>
-                <input 
+                <input
                     class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
                     id="waktu" placeholder=" " name="waktu" value="{{ old('waktu') }}" />
                 <label for="waktu"
                     class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-primary">Waktu
                 </label>
             </div>
-            <div id="formJadwalBaru" style="display: none;">
-                <div class="relative mb-8 mt-8" data-twe-input-wrapper-init>
-                    {{-- <div class="relative h-11 w-64 min-w-[100px] px-2"> --}}
+            <div id="formJadwalContainer">
+                <div id="formJadwalBaru" style="display: none;">
+                    <div class="relative mb-8 mt-8" data-twe-input-wrapper-init>
+                        {{-- <div class="relative h-11 w-64 min-w-[100px] px-2"> --}}
                         <input id="hari_baru" name="hari_baru" placeholder=" " value="{{ old('hari_baru') }}"
                             class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0">
                         <label for="hari_baru"
                             class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-primary">Hari
-                            Baru</label>
-                    {{-- </div> --}}
-                </div>
+                        </label>
+                        {{-- </div> --}}
+                    </div>
                     <div class="relative mb-8 mt-8" data-twe-input-wrapper-init>
                         <input id="waktu_baru" name="waktu_baru" placeholder=" " value="{{ old('waktu_baru') }}"
                             class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0">
                         <label for="waktu_baru"
                             class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-primary">Waktu
-                            Baru</label>
+                        </label>
+                    </div>
+
+                    <div id="formJadwalTemplate" style="display: none;">
+                        <div class="relative mb-8 mt-8" data-twe-input-wrapper-init>
+                            {{-- <div class="relative h-11 w-64 min-w-[100px] px-2"> --}}
+                            <input id="hari_baru" name="hari_baru[]" placeholder=" " value="{{ old('hari_baru') }}"
+                                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0">
+                            <label for="hari_baru"
+                                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-primary">Hari
+                            </label>
+                            {{-- </div> --}}
+                        </div>
+                        <div class="relative mb-8 mt-8" data-twe-input-wrapper-init>
+                            <input id="waktu_baru" name="waktu_baru[]" placeholder=" "
+                                value="{{ old('waktu_baru') }}"
+                                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0">
+                            <label for="waktu_baru"
+                                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-primary">Waktu
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="mt-8 pt-3">
@@ -159,10 +181,26 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const btnTambahJadwal = document.getElementById("btnTambahJadwal");
-            const formJadwalBaru = document.getElementById("formJadwalBaru");
+            const formJadwalContainer = document.getElementById("formJadwalContainer");
+            const formJadwalTemplate = document.getElementById("formJadwalTemplate");
+
+            let jadwalCounter = 0;
 
             btnTambahJadwal.addEventListener("click", function() {
-                formJadwalBaru.style.display = "block";
+                // Clone template form jadwal baru
+                const newFormJadwal = formJadwalTemplate.cloneNode(true);
+                newFormJadwal.style.display = "block";
+                newFormJadwal.id = `formJadwalBaru-${jadwalCounter}`;
+
+                // Reset nilai input di form jadwal baru
+                newFormJadwal.querySelector("[name='hari_baru[]']").name = `hari_baru[${jadwalCounter}]`;
+                newFormJadwal.querySelector("[name='waktu_baru[]']").name = `waktu_baru[${jadwalCounter}]`;
+
+                // Tambah form jadwal baru ke dalam container
+                formJadwalContainer.appendChild(newFormJadwal);
+
+                // Increment counter untuk id form jadwal berikutnya
+                jadwalCounter++;
             });
         });
     </script>

@@ -9,51 +9,57 @@
     <link href="js/tailwind.config.js" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .dataTables_wrapper .dataTables_length {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body class="font-sans">
-
     <!-- Carousel -->
     <div class="swiper">
         {{-- <div class="swiper-wrapper h-64 sm:h-72 md:h-96 lg:h-[800px]"> --}}
         <div class="swiper-wrapper">
             <!-- Slide 1: Profile Dokter -->
-            <div class="swiper-slide flex items-center justify-center h-full w-full rounded-full" id="slide-doctor">
-                @for ($i = 0; $i < 4; $i++)
-                    @php
-                        $doctor = $semuaDokter[$i % count($semuaDokter)];
-                        $image_url = $doctor->image
-                            ? asset('storage/images/' . $doctor->image)
-                            : asset(
-                                'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
-                            );
-                    @endphp
-                    <div class="text-center mx-auto" id="doctor-profile-{{ $i }}">
-                        <img class="h-96 w-96 rounded mx-auto object-cover" id="doctor-img-{{ $i }}"
-                            src="{{ $image_url }}" alt="{{ $doctor->nama }}">
-                        <h2 class="text-2xl font-bold text-white mt-4" id="doctor-name-{{ $i }}">
-                            {{ $doctor->nama }}</h2>
-                        <p class="text-2xl text-white" id="doctor-poliklinik-{{ $i }}">
-                            {{ $doctor->poli->poli }}</p>
-                        <div class="text-md text-white" id="doctor-jadwal-{{ $i }}">
-                            @foreach ($doctor->jadwals as $jadwal)
-                                <p>{{ $jadwal->hari }} - {{ $jadwal->waktu }}</p>
-                            @endforeach
+            <div class="swiper-slide flex flex-wrap items-center justify-center h-full w-full" id="slide-doctor">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 w-full">
+                    @for ($i = 0; $i < 4; $i++)
+                        @php
+                            $doctor = $semuaDokter[$i];
+                            $image_url = $doctor->image
+                                ? asset('storage/images/' . $doctor->image)
+                                : asset(
+                                    'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
+                                );
+                        @endphp
+                        <div class="text-center mx-auto flex flex-col items-center"
+                            id="doctor-profile-{{ $i }}">
+                            <img class="h-96 w-96 rounded mx-auto object-cover" id="doctor-img-{{ $i }}"
+                                src="{{ $image_url }}" alt="{{ $doctor->nama }}">
+                            <h2 class="text-2xl font-bold text-white mt-4" id="doctor-name-{{ $i }}">
+                                {{ $doctor->nama }}</h2>
+                            <p class="text-2xl text-white mt-2" id="doctor-poliklinik-{{ $i }}">
+                                {{ $doctor->poli->poli }}</p>
+                            <div class="text-md text-white mt-2" id="doctor-jadwal-{{ $i }}">
+                                @foreach ($doctor->jadwals as $jadwal)
+                                    <p class="text-center">{{ $jadwal->hari }} : {{ $jadwal->waktu }}</p>
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                @endfor
+                    @endfor
+                </div>
             </div>
             <!-- Slide 2: Alur Pendaftaran -->
             <div class="swiper-slide">
-                <img src="../images/Alur.png" class="w-full h-full " alt="Alur Pendaftaran">
+                <img src="{{ asset('storage/carousel/' . $carousels->slide2) }}" class="w-full h-full object-fit"
+                    alt="Alur Pendaftaran">
             </div>
 
             <!-- Slide 3: FAQ -->
             <div class="swiper-slide">
-                <img src="../images/faq.png" class="w-full h-full " alt="FAQ">
+                <img src="{{ asset('storage/carousel/' . $carousels->slide3) }}" class="w-full h-full" alt="FAQ">
             </div>
         </div>
 
@@ -77,13 +83,13 @@
             </div>
             <div class="p-6">
                 @if (count($semuaDokter) > 0)
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto overflow-y-auto">
                         <table id="dokterTable" class="min-w-full text-white">
                             <thead class="bg-transparent border-b">
                                 <tr>
-                                    <th class="py-2 px-1 text-left">Dokter</th>
+                                    <th class="py-2 px-10 text-left">Dokter</th>
                                     <th class="py-2 px-1 text-left">Jadwal</th>
-                                    <th class="py-2 px-1 text-left"></th>
+                                    <th class="py-2 px-16 text-left"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,11 +99,11 @@
                                             <div class="flex items-center">
                                                 <div class="flex-shrink">
                                                     @if ($s->image)
-                                                        <img class="h-[100px] w-[100px] rounded-full object-cover"
+                                                        <img class="h-[130px] w-[130px] rounded-full object-cover object-center"
                                                             src="{{ asset('storage/images/' . $s->image) }}"
                                                             alt="">
                                                     @else
-                                                        <img class="h-[80px] w-[80px] rounded-full object-cover"
+                                                        <img class="h-[130px] w-[130px] rounded-full object-cover"
                                                             src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
                                                             alt="">
                                                     @endif
@@ -131,7 +137,8 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -141,9 +148,9 @@
         const doctors = @json($semuaDokter);
         const assetPath = "{{ asset('storage/images/') }}"; // Set asset path for images
     </script>
-    <script type="application/json" id="doctor-data">
+    {{-- <script type="application/json" id="doctor-data">
         @json($semuaDokter)
-    </script>
+    </script> --}}
     <script src="../js/datatables.js"></script>
     <script src="../js/swiper.js"></script>
 </body>

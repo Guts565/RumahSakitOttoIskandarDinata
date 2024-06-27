@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jadwals', function (Blueprint $table) {
+        Schema::create('carousels', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idDokter');
-            $table->string('hari')->nullable();
-            $table->string('waktu')->nullable();
+            // $table->unsignedBigInteger('idDokter');
+            $table->string('slide2')->nullable();
+            $table->string('slide3')->nullable();
             $table->timestamps();
-            $table->foreign('idDokter')->references('id')->on('dokter')->onDelete('cascade');
-            $table->unique(['id', 'idDokter']);
+            // $table->foreign('idDokter')->references('id')->on('dokter')->onDelete('cascade');
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jadwals');
+        Schema::dropIfExists('carousels');
     }
 };
