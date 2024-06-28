@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Edit Data Dokter</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css">
@@ -247,7 +248,8 @@
                     </svg>
                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah Anda yakin ingin
                         menghapus jadwal ini?</h3>
-                    <button id="confirmDeleteBtn" data-modal-hide="popup-modal" type="button"
+                    <button id="confirmDeleteBtn" data-modal-hide="popup-modal"
+                        data-url="{{ url('/admin/jadwal') }}" type="button"
                         class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                         Ya, saya yakin
                     </button>
@@ -258,130 +260,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const imageInput = document.getElementById("image");
-            const imagePreview = document.getElementById("imagePreview");
-            const cropperModal = document.getElementById("cropperModal");
-            const cropperImage = document.getElementById("cropperImage");
-            const cropButton = document.getElementById("cropButton");
-            const closeButton = document.getElementById("closeButton");
-            let cropper;
-            let format;
-
-            imageInput.addEventListener("change", function(event) {
-                const file = event.target.files[0];
-                const reader = new FileReader();
-                format = file.type;
-
-                reader.onload = function(e) {
-                    cropperImage.src = e.target.result;
-                    cropperModal.style.display = "block";
-
-                    cropper = new Cropper(cropperImage, {
-                        aspectRatio: 1,
-                        viewMode: 1,
-                        autoCropArea: 1,
-                    });
-                };
-
-                reader.readAsDataURL(file);
-            });
-
-            cropButton.addEventListener("click", function(event) {
-                event.preventDefault(); // Prevent form submission
-
-                const canvas = cropper.getCroppedCanvas({
-                    width: 2000,
-                    height: 2000,
-                    imageSmoothingQuality: 'high', // High quality
-                });
-
-                canvas.toBlob(function(blob) {
-                    const url = URL.createObjectURL(blob);
-                    imagePreview.src = url;
-
-                    const formData = new FormData();
-                    formData.append('image', blob);
-
-                    // Simpan blob ke input file
-                    const file = new File([blob], `profile.${format.split('/')[1]}`, {
-                        type: format
-                    });
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-                    imageInput.files = dataTransfer.files;
-
-                    cropper.destroy();
-                    cropperModal.style.display = "none";
-                }, format);
-            });
-
-            // Close button event listener
-            closeButton.addEventListener("click", function() {
-                event.preventDefault(); // Prevent form submission
-                cropper.destroy();
-                cropperModal.style.display = "none";
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const btnTambahJadwal = document.getElementById("btnTambahJadwal");
-            const formJadwalBaru = document.getElementById("formJadwalBaru");
-
-            btnTambahJadwal.addEventListener("click", function() {
-                formJadwalBaru.style.display = "block";
-            });
-        });
-
-        let jadwalIdToDelete = null;
-
-        function setJadwalId(id) {
-            jadwalIdToDelete = id;
-        }
-
-        document
-            .getElementById("confirmDeleteBtn")
-            .addEventListener("click", function() {
-                if (jadwalIdToDelete !== null) {
-                    fetch(`{{ url('/admin/jadwal') }}/${jadwalIdToDelete}`, {
-                            method: "DELETE",
-                            headers: {
-                                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                            },
-                        })
-                        .then((response) => response.json())
-                        .then((data) => {
-                            if (data.success) {
-                                document
-                                    .getElementById(`jadwal-${jadwalIdToDelete}`)
-                                    .remove();
-                            } else {
-                                alert("Gagal menghapus jadwal");
-                            }
-                        })
-                        .catch((error) => {
-                            console.error("Error:", error);
-                            alert("Terjadi kesalahan");
-                        });
-                }
-            });
-    </script>
-    <script>
-        document.getElementById('image').addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('imagePreview').setAttribute('src', e.target.result);
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
     <!-- Cropper.js JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
@@ -392,6 +270,8 @@
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/js/tw-elements.umd.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="/js/edit.js"></script>
+
 </body>
 
 </html>

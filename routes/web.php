@@ -32,4 +32,3 @@ Route::post('/carousel/store', [CarouselController::class, 'store'])->name('caro
 Route::delete('/carousel/{id}', [CarouselController::class, 'destroy'])->name('carousel.destroy');
 
 
-

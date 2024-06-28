@@ -1,12 +1,46 @@
 // Swiper Initialization
 const swiper = new Swiper(".swiper", {
     // Optional parameters
-    direction: "horizontal",
+    direction: 'horizontal',
     loop: true,
     spaceBetween: 10,
     autoHeight: false,
-    speed: 1200,
-    lazyPreloadPrevNext: 0,
+    speed: 1100,
+    initialSlide: 0,
+    // createElements: true,
+    // swiperElementNodeName: "SWIPER-CONTAINER",
+    // grid: {
+    //     rows: 3,
+    // },
+    // effect:'fade',
+    // effect: "coverflow",
+    // flipEffect: {
+    //     depth: 100,
+    //     modifier: 4,
+    //     rotate: 50,
+    //     scale: 1,
+    //     slideShadows: true,
+    //     stretch: 200,
+    // },
+    // flipEffect: {
+    //     slideShadows: false,
+    // },
+    // effect: "cube",
+    // cubeEffect: {
+    //     slideShadows: false,
+    // },
+    // effect: "creative",
+    // creativeEffect: {
+    //     prev: {
+    //         // will set `translateZ(-400px)` on previous slides
+    //         translate: [0, 0, -400],
+    //     },
+    //     next: {
+    //         // will set `translateX(100%)` on next slides
+    //         translate: ["100%", 0, 0],
+    //     },
+    // },
+    // lazyPreloadPrevNext: 1,
     // mousewheel: {
     //     invert: false,
     // },
@@ -18,6 +52,7 @@ const swiper = new Swiper(".swiper", {
         delay: 5000, // Set your desired delay (5000ms = 5 seconds)
         disableOnInteraction: false,
         waitForTransition: true,
+        reverseDirection: true,
     },
     // If we need pagination
     pagination: {

@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jadwal Dokter</title>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="js/tailwind.config.js" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/css/style.css" rel="stylesheet">
+    <script defer src="/js/animation.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .dataTables_wrapper .dataTables_length {
             display: none !important;
@@ -17,9 +20,9 @@
     </style>
 </head>
 
-<body class="font-sans">
+<body class="font-sans custom-hidden">
     <!-- Carousel -->
-    <div class="swiper">
+    <div class="swiper custom-hidden-slide">
         {{-- <div class="swiper-wrapper h-64 sm:h-72 md:h-96 lg:h-[800px]"> --}}
         <div class="swiper-wrapper">
             <!-- Slide 1: Profile Dokter -->
@@ -59,7 +62,8 @@
 
             <!-- Slide 3: FAQ -->
             <div class="swiper-slide">
-                <img src="{{ asset('storage/carousel/' . $carousels->slide3) }}" class="w-full h-full" alt="FAQ">
+                <img src="{{ asset('storage/carousel/' . $carousels->slide3) }}" class="w-full h-full object-fit"
+                    alt="FAQ">
             </div>
         </div>
 
@@ -76,7 +80,7 @@
     </div>
 
     <!-- Jadwal Dokter -->
-    <div class="container mx-auto mt-14 px-4">
+    <div class="container mx-auto mt-16 mb-16 px-4 custom-hidden custom-hidden">
         <div class="bg-transparent rounded-lg shadow-lg overflow-hidden">
             <div class="bg-transparent text-white py-4">
                 <h1 class="text-center text-2xl font-bold mt-4">Jadwal Dokter</h1>
@@ -85,19 +89,19 @@
                 @if (count($semuaDokter) > 0)
                     <div class="overflow-x-auto overflow-y-auto">
                         <table id="dokterTable" class="min-w-full text-white">
-                            <thead class="bg-transparent border-b">
+                            <thead class="bg-transparent border-b custom-hidden">
                                 <tr>
                                     <th class="py-2 px-10 text-left">Dokter</th>
                                     <th class="py-2 px-1 text-left">Jadwal</th>
                                     <th class="py-2 px-16 text-left"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="custom-hidden">
                                 @foreach ($semuaDokter as $s)
                                     <tr class="border-black border-b border-t">
                                         <td class="py-4 px-4 transparent-nowrap">
                                             <div class="flex items-center">
-                                                <div class="flex-shrink">
+                                                <div class="flex-shrink custom-hidden">
                                                     @if ($s->image)
                                                         <img class="h-[130px] w-[130px] rounded-full object-cover object-center"
                                                             src="{{ asset('storage/images/' . $s->image) }}"
@@ -108,7 +112,7 @@
                                                             alt="">
                                                     @endif
                                                 </div>
-                                                <div class="ml-4">
+                                                <div class="ml-4 custom-hidden">
                                                     <div class="text-lg text-white">
                                                         {{ $s->nama }}
                                                     </div>
@@ -118,7 +122,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-1 px-1">
+                                        <td class="py-1 px-1 custom-hidden">
                                             @foreach ($s->jadwals as $jadwal)
                                                 <p class="text-lg text-white">{{ $jadwal->hari }}:
                                                     {{ $jadwal->waktu }}
@@ -132,15 +136,19 @@
                         </table>
                     </div>
                 @else
-                    <p class="text-center text-white">Tidak ada data yang ditemukan.</p>
+                    <p class="text-center text-white custom-hidden">Tidak ada data yang ditemukan.</p>
                 @endif
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/all.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js">
     </script>
@@ -151,8 +159,8 @@
     {{-- <script type="application/json" id="doctor-data">
         @json($semuaDokter)
     </script> --}}
-    <script src="../js/datatables.js"></script>
-    <script src="../js/swiper.js"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/swiper.js"></script>
 </body>
 
 </html>

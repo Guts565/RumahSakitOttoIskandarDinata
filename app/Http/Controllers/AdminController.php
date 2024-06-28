@@ -14,6 +14,11 @@ use Illuminate\View\View;
 
 class AdminController extends Controller
 {
+
+    public function test()
+    {
+        return view('admin.test');
+    }
     public function create()
     {
         $polis = Poli::all();

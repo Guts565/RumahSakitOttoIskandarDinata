@@ -73,20 +73,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-let jadwalIdToDelete = null;
-
-function setJadwalId(id) {
+const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+const baseUrl = confirmDeleteBtn.getAttribute("data-url");
+window.setJadwalId = function (id) {
     jadwalIdToDelete = id;
-}
+};
+
+let jadwalIdToDelete = null;
 
 document
     .getElementById("confirmDeleteBtn")
     .addEventListener("click", function () {
         if (jadwalIdToDelete !== null) {
-            fetch(`{{ url('/admin/jadwal') }}/${jadwalIdToDelete}`, {
+            const csrfToken = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            fetch(`${baseUrl}/${jadwalIdToDelete}`, {
                 method: "DELETE",
                 headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "X-CSRF-TOKEN": csrfToken,
                 },
             })
                 .then((response) => response.json())
@@ -105,6 +110,36 @@ document
                 });
         }
     });
+// function setJadwalId(id) {
+//     jadwalIdToDelete = id;
+// }
+
+// document
+//     .getElementById("confirmDeleteBtn")
+//     .addEventListener("click", function () {
+//         if (jadwalIdToDelete !== null) {
+//             fetch(`{{ url('/admin/jadwal') }}/${jadwalIdToDelete}`, {
+//                 method: "DELETE",
+//                 headers: {
+//                     "X-CSRF-TOKEN": "{{ csrf_token() }}",
+//                 },
+//             })
+//                 .then((response) => response.json())
+//                 .then((data) => {
+//                     if (data.success) {
+//                         document
+//                             .getElementById(`jadwal-${jadwalIdToDelete}`)
+//                             .remove();
+//                     } else {
+//                         alert("Gagal menghapus jadwal");
+//                     }
+//                 })
+//                 .catch((error) => {
+//                     console.error("Error:", error);
+//                     alert("Terjadi kesalahan");
+//                 });
+//         }
+//     });
 
 document.getElementById("image").addEventListener("change", function () {
     const file = this.files[0];

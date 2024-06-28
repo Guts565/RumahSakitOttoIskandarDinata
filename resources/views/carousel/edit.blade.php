@@ -17,16 +17,6 @@
         <form method="POST" action="{{ route('carousel.update', $carousel->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            {{-- <div class="form-group">
-                <label for="dokter_id">Dokter</label>
-                <select name="dokter_id" id="dokter_id" class="form-control" required>
-                    @foreach ($dokters as $dokter)
-                        <option value="{{ $dokter->id }}" {{ $carousel->dokter_id == $dokter->id ? 'selected' : '' }}>
-                            {{ $dokter->nama }}
-                        </option>
-                    @endforeach
-                </select>
-            </div> --}}
             <div class="form-group">
                 <label for="slide2">Gambar Slide 2</label>
                 <input type="file" name="slide2" id="slide2" class="form-control">
