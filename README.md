@@ -1,3 +1,8 @@
+## 1.8
+- improved UI
+- carousel has CRUD now
+- added js for updating doctors on carousel
+
 ## 1.7
 - added carousel and adjusting table
 
