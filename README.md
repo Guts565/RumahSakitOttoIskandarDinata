@@ -2,6 +2,7 @@
 - improved UI
 - carousel has CRUD now
 - added js for updating doctors on carousel
+- fixed carousel doctors update js
 
 ## 1.7
 - added carousel and adjusting table

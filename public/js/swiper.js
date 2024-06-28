@@ -111,7 +111,7 @@ function updateDoctorProfile(startIndex) {
 updateDoctorProfile(currentDoctorIndex);
 
 swiper.on("slideChange", function () {
-    if (swiper.realIndex === 0) {
+    if (swiper.realIndex === 0 && swiper.previousIndex !== 0) {
         currentDoctorIndex =
             (currentDoctorIndex + doctorsPerSlide) % doctors.length;
         updateDoctorProfile(currentDoctorIndex);

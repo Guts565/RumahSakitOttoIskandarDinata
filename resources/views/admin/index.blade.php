@@ -77,13 +77,13 @@
     <div class="container mx-auto mt-16 mb-16 px-4 custom-hidden">
         <div class="bg-transparent rounded-lg shadow-lg overflow-hidden">
             <div class="bg-transparent text-white py-4">
-                <h1 class="text-center text-2xl font-bold mt-4">Jadwal Dokter</h1>
             </div>
             <div class="card-body">
                 <a href="{{ url('/admin/create') }}" class=" bg-transparent text-white px-4 py-2 rounded-full pl-3"><i
                         class="fas fa-user-plus"></i>
                     Tambahkan data</a>
                 <div class="p-6">
+                    <h1 class="text-center text-2xl font-bold mb-4">Jadwal Dokter</h1>
                     @if (count($semuaDokter) > 0)
                         <div class="overflow-x-auto">
                             <table id="dokterTable" class="min-w-full min-h-full text-white ">

@@ -80,12 +80,12 @@
     </div>
 
     <!-- Jadwal Dokter -->
-    <div class="container mx-auto mt-16 mb-16 px-4 custom-hidden custom-hidden">
+    <div class="container mx-auto mt-16 mb-20 px-4 custom-hidden custom-hidden">
         <div class="bg-transparent rounded-lg shadow-lg overflow-hidden">
             <div class="bg-transparent text-white py-4">
-                <h1 class="text-center text-2xl font-bold mt-4">Jadwal Dokter</h1>
             </div>
             <div class="p-6">
+                <h1 class="text-center text-white text-2xl font-bold mb-4 custom-hidden">Jadwal Dokter</h1>
                 @if (count($semuaDokter) > 0)
                     <div class="overflow-x-auto overflow-y-auto">
                         <table id="dokterTable" class="min-w-full text-white">
