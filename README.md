@@ -1,6 +1,5 @@
 ## 1.8
-- added login page
-- added admin account
+- added login page for admin
 - added navbar
 - retouching the animation
 
