@@ -66,11 +66,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
     const btnTambahJadwal = document.getElementById("btnTambahJadwal");
-    const formJadwalBaru = document.getElementById("formJadwalBaru");
+    const formContainer = document.getElementById("formContainer");
+    const formTemplate = document.getElementById("formTemplate");
 
-    btnTambahJadwal.addEventListener("click", function () {
-        formJadwalBaru.style.display = "block";
-    });
+    if (formTemplate) {
+        btnTambahJadwal.addEventListener("click", function () {
+            const newForm = formTemplate.content.cloneNode(true);
+            formContainer.appendChild(newForm);
+        });
+    } else {
+        console.error("Element with ID 'formTemplate' not found.");
+    }
 });
 
 const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");

@@ -1,4 +1,7 @@
-## 1.8
+## 2.0
+- fixed bug array to string js for adding new schedule
+
+## 1.9
 - added login page for admin
 - added navbar
 - retouching the animation

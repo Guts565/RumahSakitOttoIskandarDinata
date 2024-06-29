@@ -150,9 +150,9 @@
                                 <table id="dokterTable" class="min-w-full min-h-full text-white ">
                                     <thead class="bg-transparent border-b custom-hidden">
                                         <tr>
-                                            <th class="py-2 px-12 text-left">Dokter</th>
+                                            <th class="py-2 px-16 text-left">Dokter</th>
                                             <th class="py-2 px-1 text-left">Jadwal</th>
-                                            <th class="py-2 pr-32 text-center">Aksi</th>
+                                            <th class="py-2 pr-[5rem] text-center">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="custom-hidden">
@@ -188,8 +188,8 @@
                                                         </p>
                                                     @endforeach
                                                 </td>
-                                                <td class="custom-hidden">
-                                                    <div class="btn-container">
+                                                <td class="py-4 px-4 custom-hidden">
+                                                    <div class="flex space-x-4">
                                                         <a href="{{ url('/dokter/' . $s->id) }}"
                                                             class="btn btn-transparent btn-rounded text-white"><i
                                                                 class="fas fa-info-circle"></i> Detail</a>

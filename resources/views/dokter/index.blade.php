@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Jadwal Dokter</title>
     <link rel="icon" type="image/png" href="images/logo.png">
     <link href="/css/style.css" rel="stylesheet">
@@ -24,7 +24,7 @@
 <body class="font-sans">
     <div id="top"></div>
     <nav
-        class="top-0 z-10 block w-full max-w-full px-4 py-2 text-black bg-neutral-200 border rounded-md shadow-md h-max border-black bg-opacity-100 backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4 custom-hidden">
+        class="top-0 z-10 block w-full max-w-full px-4 py-2 text-black bg-neutral-200 rounded-md shadow-md h-max bg-opacity-100 backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4 custom-hidden">
         <div class="flex items-center justify-between text-blue-gray-900 custom-hidden">
             <a href="#top" id="logo-link">
                 <img src="images/logo.png" alt="Logo" id="logo">
@@ -141,17 +141,17 @@
                 <h1 class="text-center text-white text-2xl font-bold mb-4 ">Jadwal Dokter</h1>
                 @if (count($semuaDokter) > 0)
                     <div class="overflow-x-auto overflow-y-auto">
-                        <table id="dokterTable" class="min-w-full text-white ">
-                            <thead class="bg-transparent border-b ">
+                        <table id="dokterTable" class="min-w-full text-white">
+                            <thead class="bg-transparent border-b border-white">
                                 <tr>
-                                    <th class="py-2 px-10 text-left">Dokter</th>
+                                    <th class="py-2 px-16 text-left">Dokter</th>
                                     <th class="py-2 px-1 text-left">Jadwal</th>
                                     <th class="py-2 px-16 text-left"></th>
                                 </tr>
                             </thead>
-                            <tbody class="custom-hidden">
+                            <tbody class="">
                                 @foreach ($semuaDokter as $s)
-                                    <tr class="border-black border-b border-t">
+                                    <tr class="border-neutral-900 border-b border-t">
                                         <td class="py-4 px-4 transparent-nowrap">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink custom-hidden">
@@ -194,7 +194,6 @@
             </div>
         </div>
     </div>
-    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>

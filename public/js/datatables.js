@@ -1,4 +1,37 @@
 $(document).ready(function () {
+    // Map days of the week to numerical values
+    const dayOrder = {
+        Senin: 1,
+        Selasa: 2,
+        Rabu: 3,
+        Kamis: 4,
+        Jumat: 5,
+        Sabtu: 6,
+        Minggu: 7,
+    };
+
+    // Function to sort schedules within each doctor's schedule cell
+    function sortSchedules() {
+        $("#dokterTable tbody tr").each(function () {
+            const scheduleCell = $(this).find("td:eq(1)");
+            const schedules = scheduleCell.find("p").get();
+
+            schedules.sort(function (a, b) {
+                const dayA = $(a).text().trim().split(":")[0];
+                const dayB = $(b).text().trim().split(":")[0];
+                return dayOrder[dayA] - dayOrder[dayB];
+            });
+
+            scheduleCell.empty();
+            $.each(schedules, function (index, schedule) {
+                scheduleCell.append(schedule);
+            });
+        });
+    }
+
+    // Call the sorting function before initializing DataTable
+    sortSchedules();
+
     // DataTable Initialization
     $("#dokterTable").DataTable({
         columnDefs: [

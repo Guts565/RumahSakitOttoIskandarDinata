@@ -69,12 +69,8 @@ class AdminController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|file|max:4096',
             'nama' => 'required|string|max:255',
             'poliklinik' => 'required|integer|exists:polis,id',
-            'alamat' => 'nullable|string',
-            'telp' => 'nullable|string',
-            'hari' => 'nullable|string',
-            'waktu' => 'nullable|string',
-            'hari_baru' => 'nullable|array',
-            'waktu_baru' => 'nullable|array',
+            'hari.*' => 'nullable|string', // validasi array hari
+            'waktu.*' => 'nullable|string', // validasi array waktu
             'hari_baru.*' => 'nullable|string',
             'waktu_baru.*' => 'nullable|string',
         ]);
@@ -133,9 +129,77 @@ class AdminController extends Controller
     }
 
 
+    // public function update(Request $request, $id)
+    // {
+    //     // dd($request->all());
+    //     // Validasi data
+    //     $request->validate([
+    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|file|max:4096',
+    //         'nama' => 'required|string|max:255',
+    //         'poliklinik' => 'required|integer|exists:polis,id',
+    //         'hari.*' => 'nullable|string', // validasi array hari
+    //         'waktu.*' => 'nullable|string', // validasi array waktu
+    //         'hari_baru.*' => 'nullable|string',
+    //         'waktu_baru.*' => 'nullable|string',
+    //     ]);
+    //     // Fetch dokter data
+    //     $dokter = Dokter::findOrFail($id);
+
+    //     // Update data dokter
+    //     $dokter->nama = $request->input('nama');
+    //     $dokter->idPoli = $request->input('poliklinik');
+    //     $dokter->alamat = $request->input('alamat');
+    //     $dokter->telp = $request->input('telp');
+
+    //     // Simpan gambar jika ada
+    //     if ($request->hasFile('image')) {
+    //         // Hapus gambar lama jika ada
+    //         if ($dokter->image) {
+    //             Storage::disk('public')->delete('images/' . $dokter->image);
+    //         }
+
+    //         // Simpan gambar baru
+    //         $imageName = time() . '.' . $request->image->extension();
+    //         $request->file('image')->storeAs('images', $imageName, 'public');
+    //         $dokter->image = $imageName;
+    //     }
+
+    //     // Simpan perubahan
+    //     $dokter->save();
+
+    //     // Update jadwal yang sudah ada
+    //     if ($request->filled('hari') && $request->filled('waktu')) {
+    //         $hari = $request->input('hari');
+    //         $waktu = $request->input('waktu');
+
+    //         foreach ($hari as $index => $hariItem) {
+    //             $jadwal = Jadwal::where('idDokter', $dokter->id)->skip($index)->first();
+
+    //             if ($jadwal) {
+    //                 $jadwal->hari = $hariItem;
+    //                 $jadwal->waktu = $waktu[$index];
+    //                 $jadwal->save();
+    //             }
+    //         }
+    //     }
+
+
+    //     // Tambah jadwal baru jika ada
+    //     if ($request->filled('hari_baru') && $request->filled('waktu_baru')) {
+    //         $jadwalBaru = new Jadwal();
+    //         $jadwalBaru->idDokter = $dokter->id;
+    //         $jadwalBaru->hari = $request->input('hari_baru');
+    //         $jadwalBaru->waktu = $request->input('waktu_baru');
+    //         $jadwalBaru->save();
+    //     }
+
+
+    //     // Redirect dengan pesan sukses
+    //     return redirect('/admin')->with('flash_message', 'Dokter berhasil diperbarui.');
+    // }
+
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         // Validasi data
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|file|max:4096',
@@ -146,6 +210,7 @@ class AdminController extends Controller
             'hari_baru.*' => 'nullable|string',
             'waktu_baru.*' => 'nullable|string',
         ]);
+
         // Fetch dokter data
         $dokter = Dokter::findOrFail($id);
 
@@ -188,20 +253,25 @@ class AdminController extends Controller
         }
 
         // Tambah jadwal baru jika ada
-        if (
-            $request->filled('hari_baru') && $request->filled('waktu_baru')
-        ) {
-            $jadwalBaru = new Jadwal();
-            $jadwalBaru->idDokter = $dokter->id;
-            $jadwalBaru->hari = $request->input('hari_baru');
-            $jadwalBaru->waktu = $request->input('waktu_baru');
-            $jadwalBaru->save();
-        }
+        if ($request->filled('hari_baru') && $request->filled('waktu_baru')) {
+            $hariBaru = $request->input('hari_baru');
+            $waktuBaru = $request->input('waktu_baru');
 
+            foreach ($hariBaru as $index => $hariItem) {
+                if (!empty($hariItem) && !empty($waktuBaru[$index])) {
+                    $jadwalBaru = new Jadwal();
+                    $jadwalBaru->idDokter = $dokter->id;
+                    $jadwalBaru->hari = $hariItem;
+                    $jadwalBaru->waktu = $waktuBaru[$index];
+                    $jadwalBaru->save();
+                }
+            }
+        }
 
         // Redirect dengan pesan sukses
         return redirect('/admin')->with('flash_message', 'Dokter berhasil diperbarui.');
     }
+
 
     public function destroy($id)
     {
