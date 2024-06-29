@@ -17,6 +17,68 @@ html {
 .min-w-full {
     min-width: 100vh;
 } */
+#myBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: red; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+}
+
+#myBtn:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+}
+
+
+/* ------------------------------------------------------------------------ Cropper ------------------------------------------------------------------------ */
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    /* padding: 25px; */
+    border: 2px solid #888;
+    width: 75%;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    /* Ensure content stays inside */
+}
+
+/* .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    margin-left: 20px;
+} */
+
+#cropperImage {
+    max-width: 100%;
+    /* Ensure image does not overflow */
+    display: block;
+    margin: 0 auto;
+}
+
 
 /* ------------------------------------------------------------------------ Animation ------------------------------------------------------------------------ */
 
@@ -38,9 +100,9 @@ section {
 
 .custom-hidden-slide {
     opacity: 0 !important;
-    filter: blur(12px) !important;
+    filter: blur(8px) !important;
     transform: translateX(-100%) !important;
-    transition: all 1.6s !important;
+    transition: all 2s !important;
 }
 
 .custom-show {
@@ -50,7 +112,7 @@ section {
 }
 
 @media (prefers-reduced-motion) {
-    .hidden {
+    .custom-hidden {
         transition: none;
     }
 }

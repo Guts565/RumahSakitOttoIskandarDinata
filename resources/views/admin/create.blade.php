@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Data Dokter</title>
+    <link href="/css/style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
@@ -16,6 +17,9 @@
         integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
         crossorigin="anonymous" />
     <link rel="stylesheet" href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css" />
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -42,11 +46,11 @@
             <div class="mx-auto flex justify-center w-[250px] h-[250px] bg-blue-300/20 rounded-full">
                 <div class="relative">
                     <img id="imagePreview" class="h-full w-full rounded-full object-cover"
-                        src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
+                        src="{{ 'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg' }}"
                         alt="">
                     <input type="file" name="image" id="image" @error('image') is-invalid @enderror hidden>
-                    <label for="image" class="cursor-pointer absolute bottom-0 right-0 bg-white/90 rounded-full">
-                        <svg data-slot="icon" class="w-6 h-6 text-blue-700" fill="none" stroke-width="1.5"
+                    <label for="image" class="cursor-pointer absolute top-2 right-2 bg-white/90 rounded-full p-1">
+                        <svg data-slot="icon" class="w-8 h-8 text-blue-800" fill="none" stroke-width="2"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -64,7 +68,21 @@
                     {{ $message }}
                 </div>
             @enderror
-            <div class="relative mb-8 mt-8">
+
+            <!-- Cropper Modal -->
+            <div id="cropperModal" class="modal">
+                <div class="modal-content">
+                    <img id="cropperImage" style="max-width: 75%;">
+                    <button
+                        class="ms-12 mb-2 mt-3 middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none  "
+                        id="cropButton">Crop</button>
+                    <button
+                        class="ms-2 mb-2 mt-3 middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none  "
+                        id="closeButton">Close</button>
+                </div>
+            </div>
+
+            <div class="relative mb-8 mt-8 text-white">
                 <p class="font-semibold">Poliklinik</p>
                 <select name="poliklinik" id="poliklinik"
                     class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
@@ -160,10 +178,13 @@
                 </div>
             </div>
             <div class="mt-8 pt-3">
+
                 <!-- Tombol Tambah Baru -->
                 <button type="button" id="btnTambahJadwal"
-                    class="middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Tambah
+                    class="middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] a
+                    ctive:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Tambah
                     Jadwal Baru</button>
+                    
                 <!-- Tombol Submit -->
                 <button type="submit"
                     class="middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -178,48 +199,14 @@
             </div>
         </form>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const btnTambahJadwal = document.getElementById("btnTambahJadwal");
-            const formJadwalContainer = document.getElementById("formJadwalContainer");
-            const formJadwalTemplate = document.getElementById("formJadwalTemplate");
-
-            let jadwalCounter = 0;
-
-            btnTambahJadwal.addEventListener("click", function() {
-                // Clone template form jadwal baru
-                const newFormJadwal = formJadwalTemplate.cloneNode(true);
-                newFormJadwal.style.display = "block";
-                newFormJadwal.id = `formJadwalBaru-${jadwalCounter}`;
-
-                // Reset nilai input di form jadwal baru
-                newFormJadwal.querySelector("[name='hari_baru[]']").name = `hari_baru[${jadwalCounter}]`;
-                newFormJadwal.querySelector("[name='waktu_baru[]']").name = `waktu_baru[${jadwalCounter}]`;
-
-                // Tambah form jadwal baru ke dalam container
-                formJadwalContainer.appendChild(newFormJadwal);
-
-                // Increment counter untuk id form jadwal berikutnya
-                jadwalCounter++;
-            });
-        });
-    </script>
-    <script>
-        document.getElementById('image').addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('imagePreview').setAttribute('src', e.target.result);
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
+    <!-- Cropper.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/js/tw-elements.umd.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/all.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="/js/createDokter.js"></script>
 </body>
 
 </html>

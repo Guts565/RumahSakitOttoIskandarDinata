@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\CarouselController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\DokterController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Middleware\Admin;
 use App\Policies\AdminPolicy;
+
 
 // Dokter Routes
 Route::get('/', [DokterController::class, 'index']);
@@ -14,13 +15,16 @@ Route::get('/dokter', [DokterController::class, 'index']);
 Route::get('/dokter/{id_dokter}', [DokterController::class, 'show']);
 
 // admin routes
-Route::get('/admin', [AdminController::class, 'index']);
-Route::get('/admin/create', [AdminController::class, 'create']);
-Route::get('/dokter/{id_dokter}/edit', [AdminController::class, 'edit']);
+Route::get('/login', [AdminController::class, 'login'])->middleware('guest');
+Route::post('/auth', [AdminController::class, 'auth']);
+Route::get('/admin', [AdminController::class, 'index'])->middleware('admin');
+Route::get('/admin/create', [AdminController::class, 'create'])->middleware('admin');
+Route::get('/dokter/{id_dokter}/edit', [AdminController::class, 'edit'])->middleware('admin');
 Route::put('/admin/{id_dokter}', [AdminController::class, 'update'])->name('dokter.update');
 Route::post('/admin', [AdminController::class, 'store']);
 Route::delete('/admin/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 Route::delete('/admin/jadwal/{id}', [AdminController::class, 'destroyJadwal']);
+Route::get('/logout', [AdminController::class, 'logout'])->middleware('admin');
 // Route::post('/dokter/deleteSelected', [AdminController::class, 'deleteSelected'])->name('dokter.deleteSelected');
 
 // carousel routes

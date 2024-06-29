@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -9,16 +10,49 @@ use App\Models\Dokter;
 use App\Models\Poli;
 use App\Models\Jadwal;
 use App\Models\Carousel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AdminController extends Controller
 {
 
-    public function test()
+    public function login()
     {
-        return view('admin.test');
+        return view('admin.login');
     }
+
+    public function auth(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        if (auth()->attempt($credentials)) {
+            $user = auth()->user();
+            if ($user->role === 'admin') {
+                return redirect('/admin');
+            }
+        }
+        return back()->with('message_fail', 'Username atau Password salah');
+    }
+
+    public function index()
+    {
+        $semuaDokter = Dokter::all();
+        $semuaDokter = Dokter::with('jadwals', 'poli')->get();
+        $carousels = Carousel::first();
+        $user = auth()->user();
+        if ($user->role === 'admin') {
+            return view('admin.index', compact('semuaDokter', 'carousels'));
+        } else {
+            return redirect('/');
+        }
+        // return view('admin.index', compact('semuaDokter','carousels'));
+    }
+
+
     public function create()
     {
         $polis = Poli::all();
@@ -26,17 +60,6 @@ class AdminController extends Controller
         $polis = Poli::orderBy('poli', 'asc')->get();
 
         return view('admin.create', compact('polis'));
-    }
-    public function index()
-    {
-        // Membuat instance dari model Student
-        // $dokterModel = new Dokter;
-        // Menggunakan instance untuk memanggil metode all()
-        $semuaDokter = Dokter::all();
-        $semuaDokter = Dokter::with('jadwals', 'poli')->get();
-        $carousels = Carousel::first();
-        // Mengembalikan view dengan data students
-        return view('admin.index', compact('semuaDokter','carousels'));
     }
     public function store(Request $request)
     {
@@ -184,15 +207,15 @@ class AdminController extends Controller
     {
         // Menggunakan instance untuk mencari dokter berdasarkan ID
         $dokter = Dokter::find($id);
+        if ($dokter->image) {
+            Storage::disk('public')->delete('images/' . $dokter->image);
+        }
         // Menghapus dokter yang ditemukan
         $dokter->delete();
         // dd($dokter->all());
         // Redirect ke halaman daftar dokter dengan pesan sukses
         return redirect('/admin')->with('flash_message', 'Dokter berhasil dihapus.');
     }
-
-
-
 
     public function destroyJadwal($id)
     {
@@ -205,6 +228,13 @@ class AdminController extends Controller
             return response()->json(['success' => false]);
         }
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
+
 
     // public function deleteSelected(Request $request)
     // {

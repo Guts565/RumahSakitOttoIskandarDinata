@@ -57,7 +57,7 @@ class CarouselController extends Controller
 
         $carousel->save();
 
-        return redirect('/carousel')->with('success', 'Carousel created successfully');
+        return redirect('/carousel')->with('success', 'Carousel berhasil dibuat');
     }
 
     public function edit($id)
@@ -109,12 +109,18 @@ class CarouselController extends Controller
         $carousel->save();
 
         // $carousels = Carousel::all(); // Fetch all carousels again
-        return redirect()->route('carousel.index')->with('success', 'Carousel updated successfully');
+        return redirect()->route('carousel.index')->with('success', 'Carousel berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         $carousel = Carousel::find($id);
+        if ($carousel->slide2) {
+            Storage::disk('public')->delete('carousel/' . $carousel->slide2);
+        }
+        if ($carousel->slide3) {
+            Storage::disk('public')->delete('carousel/' . $carousel->slide3);
+        }
         // Menghapus carousel yang ditemukan
         $carousel->delete();
         // Redirect ke halaman daftar carousel dengan pesan sukses

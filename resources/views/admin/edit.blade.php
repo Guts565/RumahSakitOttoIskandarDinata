@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Edit Data Dokter</title>
+    <link href="/css/style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
@@ -20,47 +21,7 @@
     <!-- Cropper.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
 
-        .modal-content {
-            background-color: #fff;
-            margin: 10% auto;
-            /* padding: 25px; */
-            border: 2px solid #888;
-            width: 75%;
-            height: auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            /* Ensure content stays inside */
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 10px;
-            margin-left: 20px;
-        }
-
-        #cropperImage {
-            max-width: 100%;
-            /* Ensure image does not overflow */
-            display: block;
-            margin: 0 auto;
-        }
-    </style>
 </head>
 
 <body class="antialiased flex items-center justify-center min-h-screen">
@@ -77,7 +38,7 @@
                         alt="">
                     <input type="file" name="image" id="image" @error('image') is-invalid @enderror hidden>
                     <label for="image" class="cursor-pointer absolute top-2 right-2 bg-white/90 rounded-full p-1">
-                        <svg data-slot="icon" class="w-6 h-6 text-blue-700" fill="none" stroke-width="1.5"
+                        <svg data-slot="icon" class="w-8 h-8 text-blue-800" fill="none" stroke-width="2"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -90,6 +51,7 @@
                     </label>
                 </div>
             </div>
+
             @error('image')
                 <div class="invalid-feedback text-center text-red-500">
                     {{ $message }}
@@ -103,7 +65,7 @@
                         class="ms-12 mb-2 mt-3 middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none  "
                         id="cropButton">Crop</button>
                     <button
-                        class="ms-12 mb-2 mt-3 middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none  "
+                        class="ms-2 mb-2 mt-3 middle none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none  "
                         id="closeButton">Close</button>
                 </div>
             </div>
@@ -270,7 +232,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/js/tw-elements.umd.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-    <script src="/js/edit.js"></script>
+    <script src="/js/editDokter.js"></script>
 
 </body>
 

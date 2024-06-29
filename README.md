@@ -1,4 +1,10 @@
 ## 1.8
+- added login page
+- added admin account
+- added navbar
+- retouching the animation
+
+## 1.8
 - improved UI
 - carousel has CRUD now
 - added js for updating doctors on carousel
