@@ -10,7 +10,9 @@ use App\Models\Dokter;
 use App\Models\Poli;
 use App\Models\Jadwal;
 use App\Models\Carousel;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -24,6 +26,7 @@ class AdminController extends Controller
 
     public function auth(Request $request)
     {
+        
         $credentials = $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -43,9 +46,10 @@ class AdminController extends Controller
         $semuaDokter = Dokter::all();
         $semuaDokter = Dokter::with('jadwals', 'poli')->get();
         $carousels = Carousel::first();
+        $polis = Poli::all();
         $user = auth()->user();
         if ($user->role === 'admin') {
-            return view('admin.index', compact('semuaDokter', 'carousels'));
+            return view('admin.index', compact('semuaDokter', 'carousels','polis'));
         } else {
             return redirect('/');
         }
@@ -61,6 +65,7 @@ class AdminController extends Controller
 
         return view('admin.create', compact('polis'));
     }
+
     public function store(Request $request)
     {
         // dd($request->all());
@@ -195,7 +200,7 @@ class AdminController extends Controller
 
 
     //     // Redirect dengan pesan sukses
-    //     return redirect('/admin')->with('flash_message', 'Dokter berhasil diperbarui.');
+    //     return redirect('/admin')->with('success', 'Dokter berhasil diperbarui.');
     // }
 
     public function update(Request $request, $id)
@@ -269,9 +274,8 @@ class AdminController extends Controller
         }
 
         // Redirect dengan pesan sukses
-        return redirect('/admin')->with('flash_message', 'Dokter berhasil diperbarui.');
+        return redirect('/admin')->with('success', 'Dokter berhasil diperbarui.');
     }
-
 
     public function destroy($id)
     {
@@ -284,7 +288,7 @@ class AdminController extends Controller
         $dokter->delete();
         // dd($dokter->all());
         // Redirect ke halaman daftar dokter dengan pesan sukses
-        return redirect('/admin')->with('flash_message', 'Dokter berhasil dihapus.');
+        return redirect('/admin')->with('success', 'Dokter berhasil dihapus.');
     }
 
     public function destroyJadwal($id)

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alur & FAQ</title>
+    <title>User List</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
         integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
@@ -13,44 +13,49 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body class="w-screen h-screen flex">
+<body class="font-poppins">
     <div class="container h-full mx-auto mt-[1rem] mb-[4rem] px-4 custom-hidden">
-        <h1 class="font-bold text-center text-lg">Alur & FAQ</h1>
-        <a href="{{ route('carousel.create') }}" class="btn btn-primary mb-3 text-end">Create Carousel</a>
+        <h1 class="font-bold text-center text-lg">Users</h1>
+        <a href="{{ url('/user/create') }}" class="btn btn-transparent btn-rounded mb-2"><i
+                class="fas fa-user-plus"></i>Tambahkan User</a>
         @if (session('success'))
             <div id="successMessage" class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
-        <table class="table table-bordered flex item-center justify-center ">
+        <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Alur</th>
-                    <th>FAQ</th>
+                    <th>Username</th>
+                    <th>Password</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($carousels as $c)
+                @foreach ($users as $u)
                     <tr>
-                        <td><img class="w-full h-full" src="{{ asset('storage/carousel/' . $c->slide2) }}"
-                                alt="Slide 2" >
-                        </td>
-                        <td><img class="w-full h-full" src="{{ asset('storage/carousel/' . $c->slide3) }}"
-                                alt="Slide 3">
-                        </td>
-
                         <td>
-                            <div class="flex space-x-4 text-center item-center justify-center">
-                                <a href="{{ route('carousel.edit', $c->id) }}"
+                            <div class="ml-4 custom-hidden">
+                                <div class="text-lg text-black">
+                                    {{ $u->username }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-lg text-black">
+                                {{ $u->password }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex space-x-4">
+                                <a href="{{ url('/user/' . $u->id . '/edit') }}"
                                     class="btn btn-transparent btn-rounded text-black"><i
                                         class="fas fa-info-circle"></i>Edit</a>
-                                <form action="{{ route('carousel.destroy', $c->id) }}" method="POST">
+                                <form action="{{ url('/user/' . $u->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit"
-                                        class="btn btn btn-transparent btn-rounded text-black text-center"
-                                        onclick="return confirm('Hapus Alur & FAQ?')">
+                                    <button type="submit" class="btn btn btn-transparent btn-rounded text-black"
+                                        onclick="return confirm('Hapus User?')">
                                         <i class="fas fa-trash-alt"></i>Delete
                                     </button>
                                 </form>
@@ -60,7 +65,7 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="mt-2 pb-8 text-end">
+        <div class="mt-8 pt-3 text-end">
 
             <!-- Tombol Kembali -->
             <a href="{{ url('/admin') }}">

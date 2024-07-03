@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Poli extends Model
 {
-    public function doktors()
+    public function doctors()
     {
         return $this->hasMany(Dokter::class, 'idPoli');
     }

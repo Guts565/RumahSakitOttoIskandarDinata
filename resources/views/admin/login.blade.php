@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+<body class="h-screen w-screen bg-gray-100 text-gray-900 flex justify-center item-center">
     <div class="max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1">
         <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
             @if (session('message_fail'))
@@ -72,11 +72,11 @@
                 </div>
                 <!-- Tombol Submit -->
                 <button type="submit"
-                    class="middle none rounded-lg bg-gray-900 py-3 px-[12.35rem] text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    class="middle none rounded-lg bg-gray-900 py-3 px-[12.35rem] text-center align-middle text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     data-ripple-light="true">Submit</button>
 
                 <button onclick="location.href='{{ url('/') }}'"
-                    class="mt-3 middle none rounded-lg bg-gray-900 py-3 px-[12.80rem] text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    class="mt-3 middle none rounded-lg bg-gray-900 py-3 px-[12.80rem] text-center align-middle text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button">
                     <span>Back</span>
                 </button>
@@ -92,7 +92,7 @@
                 </a>
             </p>
         </div>
-        <div class="flex-1 bg-indigo-100 text-center hidden lg:flex">
+        <div class="flex-1 bg-transparent text-center hidden lg:flex">
             <div class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
                 style="background-image: url('https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg');">
             </div>

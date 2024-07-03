@@ -1,3 +1,8 @@
+## 2.1
+- rev on carousel JS
+- removed table from main page
+- CRUD for adding polis and users
+
 ## 2.0
 - fixed bug array to string js for adding new schedule
 

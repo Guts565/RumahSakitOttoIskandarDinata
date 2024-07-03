@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Dokter;
 use App\Models\Jadwal;
+use App\Models\Poli;
 use Illuminate\View\View;
 
 class DokterController extends Controller
@@ -15,15 +16,11 @@ class DokterController extends Controller
 
     public function index()
     {
-
-        // Membuat instance dari model Student
-        $dokterModel = new Dokter;
-        // Menggunakan instance untuk memanggil metode all()
-        $semuaDokter = $dokterModel->all();
+        $semuaDokter = Dokter::all();
         $semuaDokter = Dokter::with('jadwals', 'poli')->get();
-        // Mengembalikan view dengan data students
         $carousels = Carousel::first();
-        return view('dokter.index', compact('semuaDokter','carousels'));
+        $polis = Poli::all();
+        return view('dokter.index', compact('semuaDokter', 'carousels','polis'));
     }
 
     public function show($id_dokter)

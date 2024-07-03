@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Elements for adding new schedules
     const btnTambahJadwal = document.getElementById("btnTambahJadwal");
     const formContainer = document.getElementById("formContainer");
     const formTemplate = document.getElementById("formTemplate");
@@ -11,22 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         console.error("Element with ID 'formTemplate' not found.");
     }
-});
 
-document.getElementById("image").addEventListener("change", function () {
-    const file = this.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            document
-                .getElementById("imagePreview")
-                .setAttribute("src", e.target.result);
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
+    // Elements for image cropper
     const imageInput = document.getElementById("image");
     const imagePreview = document.getElementById("imagePreview");
     const cropperModal = document.getElementById("cropperModal");
@@ -38,21 +25,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     imageInput.addEventListener("change", function (event) {
         const file = event.target.files[0];
-        const reader = new FileReader();
-        format = file.type;
+        if (file) {
+            const reader = new FileReader();
+            format = file.type;
 
-        reader.onload = function (e) {
-            cropperImage.src = e.target.result;
-            cropperModal.style.display = "block";
+            reader.onload = function (e) {
+                cropperImage.src = e.target.result;
+                cropperModal.style.display = "block";
 
-            cropper = new Cropper(cropperImage, {
-                aspectRatio: 1,
-                viewMode: 1,
-                autoCropArea: 1,
-            });
-        };
+                cropper = new Cropper(cropperImage, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                    autoCropArea: 1,
+                });
+            };
 
-        reader.readAsDataURL(file);
+            reader.readAsDataURL(file);
+        }
     });
 
     cropButton.addEventListener("click", function (event) {
@@ -84,8 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, format);
     });
 
-    // Close button event listener
-    closeButton.addEventListener("click", function () {
+    closeButton.addEventListener("click", function (event) {
         event.preventDefault(); // Prevent form submission
         cropper.destroy();
         cropperModal.style.display = "none";

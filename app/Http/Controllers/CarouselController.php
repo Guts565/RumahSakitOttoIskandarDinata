@@ -32,11 +32,21 @@ class CarouselController extends Controller
 
     public function store(Request $request)
     {
+        $customMessages = [
+            'slide2.required' => 'Alur harus diisi.',
+            'slide2.image' => 'Alur harus berupa gambar.',
+            'slide2.mimes' => 'Alur harus berupa file dengan tipe: jpeg, png, jpg, gif.',
+            'slide2.max' => 'Ukuran file Alur tidak boleh lebih besar dari 4MB.',
+            'slide3.required' => 'FAQ harus diisi.',
+            'slide3.image' => 'FAQ harus berupa gambar.',
+            'slide3.mimes' => 'FAQ harus berupa file dengan tipe: jpeg, png, jpg, gif.',
+            'slide3.max' => 'Ukuran file FAQ tidak boleh lebih besar dari 4MB.',
+        ];
+
         $request->validate([
-            // 'dokter_id' => 'required|exists:dokters,id',
-            'slide2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|file|max:2048',
-            'slide3' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|file|max:2048',
-        ]);
+            'slide2' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'slide3' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
+        ], $customMessages);
 
         $carousel = new Carousel();
 
@@ -75,11 +85,21 @@ class CarouselController extends Controller
     public function update(Request $request, $id)
     {
 
+        $customMessages = [
+            'slide2.required' => 'Alur harus diisi.',
+            'slide2.image' => 'Alur harus berupa gambar.',
+            'slide2.mimes' => 'Alur harus berupa file dengan tipe: jpeg, png, jpg, gif.',
+            'slide2.max' => 'Ukuran file Alur tidak boleh lebih besar dari 4MB.',
+            'slide3.required' => 'FAQ harus diisi.',
+            'slide3.image' => 'FAQ harus berupa gambar.',
+            'slide3.mimes' => 'FAQ harus berupa file dengan tipe: jpeg, png, jpg, gif.',
+            'slide3.max' => 'Ukuran file FAQ tidak boleh lebih besar dari 4MB.',
+        ];
+
         $request->validate([
-            // 'dokter_id' => 'required|exists:dokters,id',
-            'slide2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'slide3' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+            'slide2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'slide3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+        ], $customMessages);
 
         $carousel = Carousel::findOrFail($id);
 

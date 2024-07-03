@@ -5,28 +5,38 @@ document.addEventListener("DOMContentLoaded", function () {
     const cropperImage = document.getElementById("cropperImage");
     const cropButton = document.getElementById("cropButton");
     const closeButton = document.getElementById("closeButton");
+    const btnTambahJadwal = document.getElementById("btnTambahJadwal");
+    const formContainer = document.getElementById("formContainer");
+    const formTemplate = document.getElementById("formTemplate");
+    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+    const baseUrl = confirmDeleteBtn.getAttribute("data-url");
     let cropper;
     let format;
+    let jadwalIdToDelete = null;
 
+    // Image Input Change Event Listener
     imageInput.addEventListener("change", function (event) {
         const file = event.target.files[0];
-        const reader = new FileReader();
-        format = file.type;
+        if (file) {
+            const reader = new FileReader();
+            format = file.type;
 
-        reader.onload = function (e) {
-            cropperImage.src = e.target.result;
-            cropperModal.style.display = "block";
+            reader.onload = function (e) {
+                cropperImage.src = e.target.result;
+                cropperModal.style.display = "block";
 
-            cropper = new Cropper(cropperImage, {
-                aspectRatio: 1,
-                viewMode: 1,
-                autoCropArea: 1,
-            });
-        };
+                cropper = new Cropper(cropperImage, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                    autoCropArea: 1,
+                });
+            };
 
-        reader.readAsDataURL(file);
+            reader.readAsDataURL(file);
+        }
     });
 
+    // Crop Button Event Listener
     cropButton.addEventListener("click", function (event) {
         event.preventDefault(); // Prevent form submission
 
@@ -56,19 +66,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }, format);
     });
 
-    // Close button event listener
-    closeButton.addEventListener("click", function () {
+    // Close Button Event Listener
+    closeButton.addEventListener("click", function (event) {
         event.preventDefault(); // Prevent form submission
         cropper.destroy();
         cropperModal.style.display = "none";
     });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-    const btnTambahJadwal = document.getElementById("btnTambahJadwal");
-    const formContainer = document.getElementById("formContainer");
-    const formTemplate = document.getElementById("formTemplate");
-
+    // Tambah Jadwal Button Event Listener
     if (formTemplate) {
         btnTambahJadwal.addEventListener("click", function () {
             const newForm = formTemplate.content.cloneNode(true);
@@ -77,19 +82,9 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         console.error("Element with ID 'formTemplate' not found.");
     }
-});
 
-const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-const baseUrl = confirmDeleteBtn.getAttribute("data-url");
-window.setJadwalId = function (id) {
-    jadwalIdToDelete = id;
-};
-
-let jadwalIdToDelete = null;
-
-document
-    .getElementById("confirmDeleteBtn")
-    .addEventListener("click", function () {
+    // Confirm Delete Button Event Listener
+    confirmDeleteBtn.addEventListener("click", function () {
         if (jadwalIdToDelete !== null) {
             const csrfToken = document
                 .querySelector('meta[name="csrf-token"]')
@@ -116,46 +111,4 @@ document
                 });
         }
     });
-// function setJadwalId(id) {
-//     jadwalIdToDelete = id;
-// }
-
-// document
-//     .getElementById("confirmDeleteBtn")
-//     .addEventListener("click", function () {
-//         if (jadwalIdToDelete !== null) {
-//             fetch(`{{ url('/admin/jadwal') }}/${jadwalIdToDelete}`, {
-//                 method: "DELETE",
-//                 headers: {
-//                     "X-CSRF-TOKEN": "{{ csrf_token() }}",
-//                 },
-//             })
-//                 .then((response) => response.json())
-//                 .then((data) => {
-//                     if (data.success) {
-//                         document
-//                             .getElementById(`jadwal-${jadwalIdToDelete}`)
-//                             .remove();
-//                     } else {
-//                         alert("Gagal menghapus jadwal");
-//                     }
-//                 })
-//                 .catch((error) => {
-//                     console.error("Error:", error);
-//                     alert("Terjadi kesalahan");
-//                 });
-//         }
-//     });
-
-document.getElementById("image").addEventListener("change", function () {
-    const file = this.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            document
-                .getElementById("imagePreview")
-                .setAttribute("src", e.target.result);
-        };
-        reader.readAsDataURL(file);
-    }
 });

@@ -1,58 +1,20 @@
 // Swiper Initialization
 const swiper = new Swiper(".swiper", {
-    // Optional parameters
     direction: "horizontal",
     loop: true,
-    spaceBetween: 10,
+    // spaceBetween: 10,
     autoHeight: false,
-    speed: 1100,
+    speed: 1300,
     initialSlide: 0,
-    // createElements: true,
-    // swiperElementNodeName: "SWIPER-CONTAINER",
-    // grid: {
-    //     rows: 3,
-    // },
-    // effect:'fade',
-    // effect: "coverflow",
-    // flipEffect: {
-    //     depth: 100,
-    //     modifier: 4,
-    //     rotate: 50,
-    //     scale: 1,
-    //     slideShadows: true,
-    //     stretch: 200,
-    // },
-    // flipEffect: {
-    //     slideShadows: false,
-    // },
-    // effect: "cube",
-    // cubeEffect: {
-    //     slideShadows: false,
-    // },
-    // effect: "creative",
-    // creativeEffect: {
-    //     prev: {
-    //         // will set `translateZ(-400px)` on previous slides
-    //         translate: [0, 0, -400],
-    //     },
-    //     next: {
-    //         // will set `translateX(100%)` on next slides
-    //         translate: ["100%", 0, 0],
-    //     },
-    // },
-    // lazyPreloadPrevNext: 1,
-    // mousewheel: {
-    //     invert: false,
-    // },
     keyboard: {
         enabled: true,
         onlyInViewport: false,
     },
     autoplay: {
-        delay: 5000, // Set your desired delay (5000ms = 5 seconds)
+        delay: 20000, // Set your desired delay (5000ms = 5 seconds)
         disableOnInteraction: false,
         waitForTransition: true,
-        reverseDirection: true,
+        reverseDirection: false,
     },
     // If we need pagination
     pagination: {
@@ -72,105 +34,165 @@ const swiper = new Swiper(".swiper", {
     },
 });
 
-// // urutan berdasarkan ID
-// // Update doctor profile function
-// let currentDoctorIndex = 0;
-// const doctorsPerSlide = 4;
+$(document).ready(function () {
+    // console.log("Doctors: ", doctors);
+    // console.log("Polis: ", polis);
 
-// function updateDoctorProfile(startIndex) {
-//     for (let i = 0; i < doctorsPerSlide; i++) {
-//         const doctorIndex = (startIndex + i) % doctors.length;
-//         const doctor = doctors[doctorIndex];
+    let currentPoliIndex = 0;
+    let displayedDoctors = {};
+    let lastPoliIndex = null; // To keep track of the last displayed poli
 
-//         const profileElement = document.getElementById("doctor-profile-" + i);
-//         const imgElement = profileElement.querySelector("img");
-//         imgElement.src = doctor.image
-//             ? assetPath + "/" + doctor.image
-//             : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg";
-//         imgElement.alt = doctor.nama;
-//         profileElement.querySelector("#doctor-name-" + i).innerText =
-//             doctor.nama;
-//         profileElement.querySelector("#doctor-poliklinik-" + i).innerText =
-//             doctor.poli.poli;
+    // Initialize displayedDoctors to keep track of which doctors have been shown for each poli
+    polis.forEach((poli) => {
+        displayedDoctors[poli.id] = [];
+    });
 
-//         const jadwalElement = profileElement.querySelector(
-//             "#doctor-jadwal-" + i
-//         );
-//         jadwalElement.innerHTML = ""; // Clear previous schedule
+    function updateDoctorProfile(poliIndex) {
+        // const currentPoli = polis[poliIndex];
+        // const doctorsInPoli = doctors.filter(
+        //     (doctor) => doctor.idPoli === currentPoli.id
+        // );
+        let doctorsToShow = [];
+        let attempts = 0;
 
-//         doctor.jadwals.forEach((jadwal) => {
-//             const jadwalText = `${jadwal.hari}: ${jadwal.waktu}`;
-//             const p = document.createElement("p");
-//             p.innerText = jadwalText;
-//             p.classList.add("schedule-item");
-//             jadwalElement.appendChild(p);
-//         });
-//     }
-// }
+        while (doctorsToShow.length === 0 && attempts < polis.length) {
+            const currentPoli = polis[poliIndex];
+            const doctorsInPoli = doctors.filter(
+                (doctor) => doctor.idPoli === currentPoli.id
+            );
 
-// updateDoctorProfile(currentDoctorIndex);
+            // If no doctors in the current poli, skip to the next poli
+            if (doctorsInPoli.length === 0) {
+                poliIndex = (poliIndex + 1) % polis.length;
+                attempts++;
+                continue;
+            }
 
-// swiper.on("slideChange", function () {
-//     if (swiper.realIndex === 0 && swiper.previousIndex !== 0) {
-//         currentDoctorIndex =
-//             (currentDoctorIndex + doctorsPerSlide) % doctors.length;
-//         updateDoctorProfile(currentDoctorIndex);
-//     }
-// });
+            // Get doctors who haven't been displayed yet
+            for (let i = 0; i < doctorsInPoli.length; i++) {
+                const doctor = doctorsInPoli[i];
+                if (!displayedDoctors[currentPoli.id].includes(doctor.id)) {
+                    doctorsToShow.push(doctor);
+                    displayedDoctors[currentPoli.id].push(doctor.id);
+                    if (doctorsToShow.length >= 4) break;
+                }
+            }
 
-// // berdasarkan Nama atau poli atau lainnya
-const doctorsPerSlide = 4;
-let currentDoctorIndex = 0;
+            // If there are less than 4 doctors, wrap around and display from the beginning again
+            if (doctorsToShow.length < 4) {
+                for (let i = 0; i < doctorsInPoli.length; i++) {
+                    const doctor = doctorsInPoli[i];
+                    if (!doctorsToShow.includes(doctor)) {
+                        doctorsToShow.push(doctor);
+                        displayedDoctors[currentPoli.id].push(doctor.id);
+                        if (doctorsToShow.length >= 4) break;
+                    }
+                }
+            }
 
-// Fungsi untuk mengurutkan dokter berdasarkan ID mereka
-function sortDoctorsByName(doctors) {
-    // // berdasarkan nama
-    // return doctors.sort((a, b) => a.nama.localeCompare(b.nama));
+            // Reset tracking if all doctors have been displayed
+            if (
+                displayedDoctors[currentPoli.id].length >= doctorsInPoli.length
+            ) {
+                displayedDoctors[currentPoli.id] = [];
+            }
 
-    // berdasarkan poli
-    return doctors.sort((a, b) => a.poli.poli.localeCompare(b.poli.poli));
-}
+            if (doctorsToShow.length === 0) {
+                poliIndex = (poliIndex + 1) % polis.length;
+                attempts++;
+            } else {
+                break; // Exit loop if we have doctors to show
+            }
+        }
 
-// Urutkan dokter berdasarkan ID mereka
-const sortedDoctors = sortDoctorsByName(doctors);
+        // Skip poli if it has no doctors
+        if (doctorsToShow.length === 0) {
+            // console.log(`No dokter in this poli ${currentPoli.poli}`);
+            return;
+        }
 
-function updateDoctorProfile(startIndex) {
-    for (let i = 0; i < doctorsPerSlide; i++) {
-        const doctorIndex = (startIndex + i) % sortedDoctors.length;
-        const doctor = sortedDoctors[doctorIndex];
+        // console.log("Current Poli: ", polis[poliIndex]);
+        // console.log("Doctors to Show: ", doctorsToShow);
 
-        const profileElement = document.getElementById("doctor-profile-" + i);
-        const imgElement = profileElement.querySelector("img");
-        imgElement.src = doctor.image
-            ? assetPath + "/" + doctor.image
-            : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg";
-        imgElement.alt = doctor.nama;
-        profileElement.querySelector("#doctor-name-" + i).innerText =
-            doctor.nama;
-        profileElement.querySelector("#doctor-poliklinik-" + i).innerText =
-            doctor.poli.poli;
+        const profileContainer = document.querySelector("#slide-doctor .grid");
+        profileContainer.innerHTML = ""; // Clear the container
 
-        const jadwalElement = profileElement.querySelector(
-            "#doctor-jadwal-" + i
-        );
-        jadwalElement.innerHTML = ""; // Hapus jadwal sebelumnya
+        doctorsToShow.forEach((doctor, i) => {
+            const image_url = doctor.image
+                ? `${assetPath}/${doctor.image}`
+                : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg";
 
-        doctor.jadwals.forEach((jadwal) => {
-            const jadwalText = `${jadwal.hari}: ${jadwal.waktu}`;
-            const p = document.createElement("p");
-            p.innerText = jadwalText;
-            p.classList.add("schedule-item");
-            jadwalElement.appendChild(p);
+            const profileHtml = `
+            <div class="text-center mx-auto flex flex-col items-center" id="doctor-profile-${i}">
+                    <img class="h-96 w-96 rounded mx-auto object-cover" id="doctor-img-${i}" src="${image_url}" alt="${
+                doctor.nama
+            }">
+                    <h2 class="text-3xl font-bold text-white mt-2" id="doctor-name-${i}">${
+                doctor.nama
+            }</h2>
+                    <p class="text-3xl text-white mt-2" id="doctor-poliklinik-${i}">${
+                polis[poliIndex].poli
+            }</p>
+                <div class="text-md text-white mt-2 text-left" id="doctor-jadwal-${i}">
+                    ${doctor.jadwals
+                        .map(
+                            (jadwal) =>
+                                `<p class="">${jadwal.hari}: ${jadwal.waktu}</p>`
+                        )
+                        .join("")}
+                </div>
+            </div>
+            `;
+            profileContainer.innerHTML += profileHtml;
+
+            // Sort schedules
+            const jadwalElement = document.querySelector(
+                `#doctor-profile-${i} #doctor-jadwal-${i}`
+            );
+            sortSchedules($(jadwalElement));
+        });
+
+        // Center the profiles if less than 4
+        profileContainer.style.display = "grid";
+        profileContainer.style.gridTemplateColumns =
+            "repeat(auto-fit, minmax(300px, 1fr))";
+        profileContainer.style.gap = "2rem"; // Adjust the gap as needed
+
+        lastPoliIndex = poliIndex; // Update lastPoliIndex
+    }
+
+    function sortSchedules(scheduleCell) {
+        const dayOrder = {
+            Senin: 1,
+            Selasa: 2,
+            Rabu: 3,
+            Kamis: 4,
+            Jumat: 5,
+            Sabtu: 6,
+            Minggu: 7,
+        };
+
+        const schedules = scheduleCell.find("p").get();
+        schedules.sort(function (a, b) {
+            const dayA = $(a).text().trim().split(":")[0];
+            const dayB = $(b).text().trim().split(":")[0];
+            return dayOrder[dayA] - dayOrder[dayB];
+        });
+        scheduleCell.empty();
+        $.each(schedules, function (index, schedule) {
+            scheduleCell.append(schedule);
         });
     }
-}
 
-updateDoctorProfile(currentDoctorIndex);
+    swiper.on("slideChange", function () {
+        if (swiper.realIndex === 2 && swiper.previousIndex !== 0) {
+            do {
+                currentPoliIndex = (currentPoliIndex + 1) % polis.length;
+            } while (currentPoliIndex === lastPoliIndex);
+            updateDoctorProfile(currentPoliIndex);
+        }
+    });
 
-swiper.on("slideChange", function () {
-    if (swiper.realIndex === 0 && swiper.previousIndex !== 0) {
-        currentDoctorIndex =
-            (currentDoctorIndex + doctorsPerSlide) % sortedDoctors.length;
-        updateDoctorProfile(currentDoctorIndex);
-    }
+    // Initialize with the first department
+    updateDoctorProfile(currentPoliIndex);
 });
